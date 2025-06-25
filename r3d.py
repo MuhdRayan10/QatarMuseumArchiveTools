@@ -6,7 +6,8 @@ import os
 
 def r3d_to_mov(input_path):
     output_path = os.path.splitext(input_path)[0] + '.mov'
-    command = ["redline","-i", input_path, "-w", "201", "-R", "4", "--o", output_path]
+    command = ["redline", "--exportPreset", "A", "-i", input_path, "-w", "201", "-R", "4", 
+               "--useRMD", "1", "-c", "1", "-G", "32", "--o", output_path]
 
     
 
