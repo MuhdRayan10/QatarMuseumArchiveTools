@@ -1,15 +1,17 @@
 import subprocess
+import argparse
+import sys
+import os
 
-input_path = "input.R3D"
-output_path = "output.mp4"
 
-cmd = [
-    "ffmpeg",
-    "-i", input_path,
-    "-c:v", "libx264",
-    "-preset", "fast",
-    "-crf", "23",
-    output_path
-]
+def r3d_to_mov(input_path):
+    output_path = os.path.splitext(input_path)[0] + '.mov'
+    command = ["redline","-i", input_path, "-w", "201", "-R", "4", "--o", output_path]
 
-subprocess.run(cmd, check=True)
+    
+
+    print("Running R3D -> MOV conversion...")
+    subprocess.run(command, check=True)
+    print(f"Conversion complete: {output_path}")
+
+r3d_to_mov("/Users/rayan/Downloads/sample.R3D")
