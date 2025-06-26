@@ -4,9 +4,9 @@ import time
 import os
 
 
-def r3d_to_mov(input_path, output_dir):
+def r3d_to_mov(input_path, output_dir, resolution):
     output_path = os.path.join(output_dir, os.path.splitext(os.path.basename(input_path))[0] + '.mov')
-    command = ["redline", "--exportPreset", "A", "-i", input_path, "-w", "201", "-R", "1", 
+    command = ["redline", "--exportPreset", "A", "-i", input_path, "-w", "201", "-R", str(resolution), 
                "--useRMD", "1", "-c", "1", "-G", "32", "--o", os.path.splitext(output_path)[0]]
 
     print("Running R3D -> MOV conversion...")
@@ -25,23 +25,18 @@ def mov_to_mp4(input_path):
     return output_path
 
 
-def convert_file(input_path, output_dir):
+def convert_file(input_path, output_dir, resolution="2"):
     
     os.makedirs(output_dir, exist_ok=True)
     
-    mov_path = r3d_to_mov(input_path, output_dir)
+    mov_path = r3d_to_mov(input_path, output_dir, resolution)
     mp4_path = mov_to_mp4(mov_path)
     final_mp4 = os.path.join(output_dir, os.path.basename(mp4_path))
     
     os.replace(mp4_path, final_mp4)
-    
-    try:
-        os.remove(mov_path)
-    except OSError:
-        pass
+    os.remove(mov_path)
     
     return final_mp4
-
 
 def convert_directory(input_dir):
 
