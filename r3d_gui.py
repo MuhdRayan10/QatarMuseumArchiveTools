@@ -43,7 +43,7 @@ class ConverterThread(threading.Thread):
                 elapsed = time.time() - start
                 rate = size_handled / elapsed if elapsed>0 else 0
                 eta = (total - processed) * (elapsed / processed) if processed>0 else 0
-                self.update(processed, total, size_handled, rate, eta)
+                self.update(processed, total, size_handled, rate, eta, time.time() - start)
 
         self.done()
 
@@ -128,7 +128,7 @@ class MainWindow(QWidget):
         self.log.clear()
         self.stats.setText("Files: 0/0\nData: 0 MB\nRate: 0 MB/s\nETA: 0s")
 
-        def update(p, total, mb, rate, eta):
+        def update(p, total, mb, rate, eta, time_elapsed):
             self.progress_bar.setMaximum(total)
             self.progress_bar.setValue(p)
             self.log.append(f"Processed {p}/{total}")
@@ -137,6 +137,7 @@ class MainWindow(QWidget):
                 f"Data: {mb/(1024*1024*1024):.2f} GB\n"
                 f"Rate: {rate/(1024*1024):.2f} MB/s\n"
                 f"Expected time of Completion: {eta:.1f}s"
+                f"Elapsed: {time_elapsed:.1f}s ({time_elapsed / 60:.1f} min)"
             )
 
         def done():
