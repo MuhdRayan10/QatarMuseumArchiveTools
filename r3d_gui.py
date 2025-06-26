@@ -1,12 +1,48 @@
-from PyQt6.QtWidgets import QApplication, QWidget, QLabel, QLineEdit, QPushButton, QVBoxLayout, QHBoxLayout, \
+from PyQt6.QtWidgets import QWidget, QLabel, QLineEdit, QPushButton, QVBoxLayout, QHBoxLayout, \
 QFileDialog, QProgressBar, QTabWidget, QTextEdit, QSpinBox, QComboBox, QMessageBox
 
-import r3d, os, threading
+import r3d, os, threading, time
 
 class ConverterThread(threading.Thread):
-    def __init__(self):
-        pass
+    def __init__(self, src_dir, resolution, workers, update_cb, done_cb):
+        super().__init__()
+        self.src_dir = src_dir
+        self.resolution = resolution
+        self.workers = workers
+        self.update = update_cb
+        self.done = done_cb
+        self._stop = False
 
+    def run(self):
+        start = time.time()
+
+        files = []
+        for root, _, fs in os.walk(self.src_dir):
+            for f in fs:
+                if f.lower().endswith('.r3d'):
+                    files.append(os.path.join(root, f))
+
+        total = len(files)
+        processed = 0
+        size_handled = 0
+        for src in files:
+            if self._stop:
+                break
+            rel = os.path.relpath(src, self.src_dir)
+            out_dir = os.path.join(self.src_dir + '_converted', os.path.dirname(rel))
+            r3d.convert_file(src, out_dir, self.resolution)
+            processed += 1
+            size_handled += os.path.getsize(src)
+            elapsed = time.time() - start
+            rate = size_handled / elapsed if elapsed > 0 else 0
+
+            #ETA calculation is inaccurate for now, will fix it later
+            eta = (total - processed) * (elapsed / processed) if processed > 0 else 0
+            self.update(processed, total, size_handled, rate, eta)
+        self.done()
+
+    def stop(self):
+        self._stop = True
 
 class MainWindow(QWidget):
     def __init__(self):
