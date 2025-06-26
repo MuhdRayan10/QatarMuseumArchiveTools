@@ -1,7 +1,7 @@
 from PyQt6.QtWidgets import QApplication, QWidget, QLabel, QLineEdit, QPushButton, QVBoxLayout, QHBoxLayout, \
 QFileDialog, QProgressBar, QTabWidget, QTextEdit, QSpinBox, QComboBox, QMessageBox
 
-import r3d, os
+import r3d, os, threading
 
 class ConverterThread(threading.Thread):
     def __init__(self):
@@ -92,7 +92,7 @@ class MainWindow(QWidget):
             self.log.append(f"Processed {p}/{total}")
             self.stats.setText(
                 f"Files: {p}/{total}\n"
-                f"Data: {mb/(1024*1024):.2f} MB\n"
+                f"Data: {mb/(1024*1024*1024):.2f} GB\n"
                 f"Rate: {rate/(1024*1024):.2f} MB/s\n"
                 f"Expected time of Completion: {eta:.1f}s"
             )
