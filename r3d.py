@@ -1,11 +1,12 @@
 import subprocess
 import ffmpeg
+import time
 import os
 
 
 def r3d_to_mov(input_path, output_dir):
     output_path = os.path.join(output_dir, os.path.splitext(os.path.basename(input_path))[0] + '.mov')
-    command = ["redline", "--exportPreset", "A", "-i", input_path, "-w", "201", "-R", "4", 
+    command = ["redline", "--exportPreset", "A", "-i", input_path, "-w", "201", "-R", "1", 
                "--useRMD", "1", "-c", "1", "-G", "32", "--o", os.path.splitext(output_path)[0]]
 
     print("Running R3D -> MOV conversion...")
@@ -43,6 +44,10 @@ def convert_file(input_path, output_dir):
 
 
 def convert_directory(input_dir):
+
+    start_time = time.time()
+    file_count, data_handled = 0, 0
+
     input_dir = input_dir.rstrip(os.sep)
     
     parent = os.path.dirname(input_dir)
@@ -59,5 +64,14 @@ def convert_directory(input_dir):
             src = os.path.join(root, file)
             print(f"Converting {src} to {target_folder}")
             convert_file(src, target_folder)
+
+            file_count += 1
+            data_handled += os.path.getsize(src)
+
+    total_time = time.time() - start_time
+    print(f"Total conversion time: {total_time} seconds")
+    print(f"Total files converted: {file_count}")
+    print(f"Total data handled: {data_handled / (1024 * 1024):.2f} MB")
+    print(f"Rate of conversion: {data_handled / (total_time) / (1024 * 1024):.2f} MB/s")
 
 convert_directory("/Users/rayan/Downloads/d1")
