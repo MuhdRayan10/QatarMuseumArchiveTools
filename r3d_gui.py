@@ -1,7 +1,8 @@
-from PyQt6.QtWidgets import QWidget, QLabel, QLineEdit, QPushButton, QVBoxLayout, QHBoxLayout, \
+from PyQt6.QtWidgets import QApplication, QWidget, QLabel, QLineEdit, QPushButton, QVBoxLayout, QHBoxLayout, \
 QFileDialog, QProgressBar, QTabWidget, QTextEdit, QSpinBox, QComboBox, QMessageBox
 
-import r3d, os, threading, time
+import r3d, os, threading, time, sys
+import concurrent.futures
 
 class ConverterThread(threading.Thread):
     def __init__(self, src_dir, resolution, workers, update_cb, done_cb):
@@ -25,20 +26,25 @@ class ConverterThread(threading.Thread):
         total = len(files)
         processed = 0
         size_handled = 0
-        for src in files:
-            if self._stop:
-                break
-            rel = os.path.relpath(src, self.src_dir)
-            out_dir = os.path.join(self.src_dir + '_converted', os.path.dirname(rel))
-            r3d.convert_file(src, out_dir, self.resolution)
-            processed += 1
-            size_handled += os.path.getsize(src)
-            elapsed = time.time() - start
-            rate = size_handled / elapsed if elapsed > 0 else 0
+        
+        with concurrent.futures.ThreadPoolExecutor(max_workers=self.workers) as exe:
+            
+            future_to_src = {exe.submit(r3d.convert_file, src, os.path.join(self.src_dir + '_converted',
+                            os.path.dirname(os.path.relpath(src, self.src_dir))), self.resolution) : src for src in files}
+                
+            for future in concurrent.futures.as_completed(future_to_src):
+                if self._stop:
+                    break
+                src = future_to_src[future]
+                future.result()  
+                
+                processed += 1
+                size_handled += os.path.getsize(src)
+                elapsed = time.time() - start
+                rate = size_handled / elapsed if elapsed>0 else 0
+                eta = (total - processed) * (elapsed / processed) if processed>0 else 0
+                self.update(processed, total, size_handled, rate, eta)
 
-            #ETA calculation is inaccurate for now, will fix it later
-            eta = (total - processed) * (elapsed / processed) if processed > 0 else 0
-            self.update(processed, total, size_handled, rate, eta)
         self.done()
 
     def stop(self):
@@ -144,3 +150,8 @@ class MainWindow(QWidget):
             self.thread.stop()
             self.thread.join()
         super().closeEvent(event)
+
+app = QApplication(sys.argv)
+win = MainWindow()
+win.show()
+sys.exit(app.exec())

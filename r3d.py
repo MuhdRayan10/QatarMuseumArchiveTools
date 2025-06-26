@@ -68,5 +68,3 @@ def convert_directory(input_dir):
     print(f"Total files converted: {file_count}")
     print(f"Total data handled: {data_handled / (1024 * 1024):.2f} MB")
     print(f"Rate of conversion: {data_handled / (total_time) / (1024 * 1024):.2f} MB/s")
-
-convert_directory("/Users/rayan/Downloads/d1")
