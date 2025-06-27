@@ -126,7 +126,7 @@ class MainWindow(QWidget):
         self.progress_bar.setValue(0)
         self.progress_bar.setMaximum(1)
         self.log.clear()
-        self.stats.setText("Files: 0/0\nData: 0 MB\nRate: 0 MB/s\nETA: 0s")
+        self.stats.setText("Files: 0/0\nData: 0 MB\nRate: 0 MB/s\nETA: 0s\nElapsed: 0s (0 min)")
 
         def update(p, total, mb, rate, eta, time_elapsed):
             self.progress_bar.setMaximum(total)
@@ -136,7 +136,7 @@ class MainWindow(QWidget):
                 f"Files: {p}/{total}\n"
                 f"Data: {mb/(1024*1024*1024):.2f} GB\n"
                 f"Rate: {rate/(1024*1024):.2f} MB/s\n"
-                f"Expected time of Completion: {eta:.1f}s"
+                f"Expected time of Completion: {eta:.1f}s\n"
                 f"Elapsed: {time_elapsed:.1f}s ({time_elapsed / 60:.1f} min)"
             )
 

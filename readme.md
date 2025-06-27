@@ -9,9 +9,9 @@ This part of the repo contains a **Python** utility to batch-convert **RED `.R3D
 * **REDCINE‑X Pro** (provides the `redline` CLI tool).
 * **FFmpeg** (for converting `.mov` into `.mp4`.
 * **Python packages**: `ffmpeg-python`, `subprocess`, `time`, `os` 
+* **FFmpeg** (for converting `.mov` into `.mp4`).
+* **Python packages**: `PyQt6`, `ffmpeg-python`
 
-  ```bash
-  pip install ffmpeg-python
 
 ## Functions To Get Used To
 
@@ -21,7 +21,6 @@ This part of the repo contains a **Python** utility to batch-convert **RED `.R3D
 * **`convert_directory(input_dir)`**: Recursively processes all `.R3D` files in `input_dir`, and creates a new directory of similar structure containing the converted files.
 
 
-  ```
 
 ## Installation
 
@@ -31,7 +30,7 @@ This part of the repo contains a **Python** utility to batch-convert **RED `.R3D
    git clone https://github.com/MuhdRayan10/QatarMuseumArchiveTools
    cd QatarMuseumArchiveTools
    ```
-2. **Install Python dependencies** (none so far, but in case):
+2. **Install Python dependencies** (only PyQt6):
 
    ```bash
    pip install -r requirements.txt
@@ -47,6 +46,31 @@ This part of the repo contains a **Python** utility to batch-convert **RED `.R3D
 
 <Working on this section>
 
+### Command Line
+
+Import the functions in `r3d.py` to integrate conversion into your own scripts.
+For example:
+
+```python
+from r3d import convert_directory
+convert_directory("/path/to/r3d/files")
+```
+
+### Graphical Interface
+
+Run `python r3d_gui.py` to launch a simple GUI built with **PyQt6**. The
+interface allows you to:
+
+1. Browse for the folder containing `.R3D` clips.
+2. Choose a compression ratio (1, 2, 4 or 8).
+3. Set the number of worker threads used during conversion.
+4. Monitor progress in real time via a progress bar and log output.
+5. View statistics such as data processed, conversion rate and estimated time
+   remaining.
+
+Closing the window while a conversion is running will stop the workers
+gracefully.
+
 
 ## Customisability
 
@@ -57,4 +81,3 @@ Will add features that can help users tweak the quality of the conversion, and m
 This project is licensed under the **MIT License**. See [LICENSE](https://opensource.org/license/mit) for details.
 
 ---
-
