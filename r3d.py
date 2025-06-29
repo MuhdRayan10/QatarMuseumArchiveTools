@@ -1,8 +1,27 @@
 import subprocess
+import threading
 import ffmpeg
 import time
 import os
 
+from openpyxl import Workbook, load_workbook
+
+
+excel_file = "./conversion_log.xlsx"
+excel_lock = threading.Lock()
+
+def add_log_entry(input_path, output_path):
+    with excel_lock:
+        if not os.path.exists(excel_file):
+            wb = Workbook()
+            ws = wb.active
+            ws.append(["Input Path", "Output Path"])
+            wb.save(excel_file)
+
+        wb = load_workbook(excel_file)
+        ws = wb.active
+        ws.append([input_path, output_path])
+        wb.save(excel_file)
 
 def r3d_to_mov(input_path, output_dir, resolution):
     output_path = os.path.join(output_dir, os.path.splitext(os.path.basename(input_path))[0] + '.mov')
@@ -35,7 +54,8 @@ def convert_file(input_path, output_dir, resolution="2"):
     
     os.replace(mp4_path, final_mp4)
     os.remove(mov_path)
-    
+
+    add_log_entry(input_path, final_mp4)
     return final_mp4
 
 def convert_directory(input_dir):
