@@ -5,9 +5,10 @@ import r3d, os, threading, time, sys
 import concurrent.futures
 
 class ConverterThread(threading.Thread):
-    def __init__(self, src_dir, resolution, workers, update_cb, done_cb):
+    def __init__(self, src_dir, dst_dir, resolution, workers, update_cb, done_cb):
         super().__init__()
         self.src_dir = src_dir
+        self.dst_dir = dst_dir
         self.resolution = resolution
         self.workers = workers
         self.update = update_cb
@@ -16,34 +17,36 @@ class ConverterThread(threading.Thread):
 
     def run(self):
         start = time.time()
-
-        files = []
-        for root, _, fs in os.walk(self.src_dir):
-            for f in fs:
-                if f.lower().endswith('.r3d'):
-                    files.append(os.path.join(root, f))
-
+        # gather all .r3d files
+        files = [
+            os.path.join(root, f)
+            for root, _, fs in os.walk(self.src_dir)
+            for f in fs if f.lower().endswith('.r3d')
+        ]
         total = len(files)
         processed = 0
         size_handled = 0
-        
+
         with concurrent.futures.ThreadPoolExecutor(max_workers=self.workers) as exe:
-            
-            future_to_src = {exe.submit(r3d.convert_file, src, os.path.join(self.src_dir + '_converted',
-                            os.path.dirname(os.path.relpath(src, self.src_dir))), self.resolution) : src for src in files}
-                
+            future_to_src = {
+                exe.submit(r3d.convert_file, src, os.path.join(self.dst_dir,
+                    os.path.dirname(os.path.relpath(src, self.src_dir))),
+                    self.resolution): src for src in files}
+
             for future in concurrent.futures.as_completed(future_to_src):
                 if self._stop:
                     break
                 src = future_to_src[future]
-                future.result()  
                 
+                future.result()
+
                 processed += 1
                 size_handled += os.path.getsize(src)
                 elapsed = time.time() - start
-                rate = size_handled / elapsed if elapsed>0 else 0
-                eta = (total - processed) * (elapsed / processed) if processed>0 else 0
-                self.update(processed, total, size_handled, rate, eta, time.time() - start)
+                rate = size_handled / elapsed if elapsed > 0 else 0
+                eta = (total - processed) * (elapsed / processed) if processed > 0 else 0
+                
+                self.update(processed, total, size_handled, rate, eta, elapsed)
 
         self.done()
 
@@ -58,7 +61,11 @@ class MainWindow(QWidget):
 
         self.dir_input = QLineEdit()
         browse_btn = QPushButton("Browse")
-        browse_btn.clicked.connect(self.browse)
+        browse_btn.clicked.connect(self.browse_src)
+
+        self.dst_input = QLineEdit()
+        dst_browse = QPushButton("Browse…")
+        dst_browse.clicked.connect(self.browse_dst)
 
         self.res_combo = QComboBox()
         for r in (1, 2, 4, 8):
@@ -75,6 +82,12 @@ class MainWindow(QWidget):
         controls.addWidget(QLabel("Source:"))
         controls.addWidget(self.dir_input)
         controls.addWidget(browse_btn)
+
+        dst_layout = QHBoxLayout()
+        dst_layout.addWidget(QLabel("Destination Directory:"))
+        dst_layout.addWidget(self.dst_input)
+        dst_layout.addWidget(dst_browse)
+        controls.addLayout(dst_layout)
 
         controls.addWidget(QLabel("Compression R:"))
         controls.addWidget(self.res_combo)
@@ -110,13 +123,19 @@ class MainWindow(QWidget):
 
         self.thread = None
 
-    def browse(self):
+    def browse_src(self):
         d = QFileDialog.getExistingDirectory(self, "Select Source Directory")
         if d:
             self.dir_input.setText(d)
 
+    def browse_dst(self):
+        d = QFileDialog.getExistingDirectory(self, "Select Destination Directory")
+        if d:
+            self.dst_input.setText(d)
+
     def start_export(self):
         src = self.dir_input.text().strip()
+        dst = self.dst_input.text().strip()
         if not os.path.isdir(src):
             QMessageBox.critical(self, "Error", "Select a valid source directory")
             return
@@ -143,7 +162,7 @@ class MainWindow(QWidget):
         def done():
             self.log.append("Conversion complete!")
 
-        self.thread = ConverterThread(src, res, workers, update, done)
+        self.thread = ConverterThread(src, dst, res, workers, update, done)
         self.thread.start()
 
     def closeEvent(self, event):
