@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %} Dashboard {% endblock %}
+{% block content %} 
+
+
+
+        <div class = 'dashboard'>
+            <h1> Welcome {{content}}! </h1>
+            <h1> This is a simple dashboard to view and manage QM assets </h1>
+            <p> Lets get started! </p>
+            {% for x in range(0,10) %} 
+                <p>Do this</p>
+            {% endfor %}
+            <a href="https://google.com" target="_blank">Go to Google</a>
+        
+
+            <div class = 'timeButtons'>
+                <label for="Weekly">Weekly</label>
+                <button id = "Weekly"> Weekly </button>
+                <label for="Monthly">Monthly</label>
+                <button id = "Monthly"> Monthly </button>
+
+                <button onclick="loadChart()">Show Assets</button>
+            </div>
+
+
+            <div class = "total-display">
+                <h1>Total Assets: <span id="count">0</span></h1>
+            </div> 
+            
+            <div class = "file bars">
+                <div class = "bar" data-type="images"></div>
+                <div class = "bar" data-type="videos"></div>
+                <div class = "bar" data-type="audio"></div>
+                <div class = "bar" data-type="documents"></div>
+                <canvas id="barCharts" style="width:100%;max-width:700px"></canvas>
+            </div>
+        </div>
+
+        <script>
+         console.log("Hello world") 
+        v = prompt("Enter a number")
+        console.log(`The value of v is ${v}`)
+        
+        const myChart = new Chart("barCharts", {
+            type: "bar",
+            data: {}
+        })
+
+        function loadChart(){
+        }
+        
+
+
+         </script>
+{% endblock %}
