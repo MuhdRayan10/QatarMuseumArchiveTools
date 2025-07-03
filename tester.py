@@ -14,10 +14,8 @@ def dashboard():
 
     return render_template("index.html", content = 'user!')
 
-@app.route('/get_data')
-def get_data():
-    selected_month = request.json['month']
-    
+
+
 
 
 
