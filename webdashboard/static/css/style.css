@@ -1,0 +1,24 @@
+:root {
+  --nmq-blue: #6B86A2; 
+  --nmq-dark: #1F2430;
+  --nmq-light: #F5F5F5;
+}
+
+body {
+  background-color: var(--nmq-dark);
+  color: var(--nmq-light);
+}
+
+.navbar {
+  background-color: var(--nmq-blue) !important;
+}
+
+.card.bg-secondary {
+  background-color: #2A2E3B !important;
+}
+
+select.form-select {
+  background-color: #2A2E3B;
+  color: var(--nmq-light);
+  border: 1px solid var(--nmq-blue);
+}
