@@ -1,18 +1,18 @@
-let rawData = null;
+let rawData = {};
 
-// fetching data once loaded
+// on load, fetch the JSON
 fetch("/api/data")
   .then(res => res.json())
   .then(data => {
     rawData = data;
-    populateMonths(Object.keys(data));
+    initControls(Object.keys(data));
     updateChart();
   });
 
-function populateMonths(months) {
-  const sel = document.getElementById("monthSelect");
-  sel.innerHTML = months.map(m => `<option>${m}</option>`).join("");
-  sel.addEventListener("change", updateChart);
+function initControls(months) {
+  const monthSel = document.getElementById("monthSelect");
+  monthSel.innerHTML = months.map(m => `<option>${m}</option>`).join("");
+  monthSel.addEventListener("change", updateChart);
   document.getElementById("viewToggle")
     .addEventListener("change", updateChart);
 }
@@ -20,32 +20,46 @@ function populateMonths(months) {
 function updateChart() {
   const month = document.getElementById("monthSelect").value;
   const view  = document.getElementById("viewToggle").value;
-  if (!rawData || !month) return;
+  if (!rawData[month]) return;
 
-  let labels, series;
+  const monthData = rawData[month];
+  const assetTypes = ["images","videos","audio","documents"];
+  let labels = [], data = [];
+
   if (view === "weekly") {
-    labels = Object.keys(rawData[month]);
-    series = labels.map(week => rawData[month][week]);
-  } else {
-    
-    // monthly: sum each type across all weeks
-    labels = ["images","videos","audio","documents"];
-    const acc = {images:0,videos:0,audio:0,documents:0};
-    Object.values(rawData[month]).forEach(week => {
-      labels.forEach(type => acc[type] += week[type]);
+    // one bar per week, sum all asset-types for that week
+    labels = Object.keys(monthData);
+    data = labels.map(week => {
+      const wk = monthData[week];
+      return Object.values(assetTypes).reduce((sum, type) =>
+        sum + Number(wk[type] || 0), 0
+      , 0);
     });
-    series = [acc];
+  } else {
+    // pie: one slice per asset-type, sum that type across all weeks
+    labels = assetTypes;
+    data = assetTypes.map(type =>
+      Object.values(monthData).reduce((sum, wk) =>
+        sum + Number(wk[type] || 0)
+      , 0)
+    );
   }
 
+  // compute total
+  const total = data.reduce((s, v) => s + v, 0);
+
+  // render chart
   const ctx = document.getElementById("chartCanvas").getContext("2d");
   if (window._qmChart) window._qmChart.destroy();
   window._qmChart = new Chart(ctx, {
-    type: view==="weekly"?"bar":"pie",
+    type: view === "weekly" ? "bar" : "pie",
     data: {
-      labels: view==="weekly"?labels:labels,
+      labels,
       datasets: [{
-        label: view==="weekly"?`Weekly breakdown for ${month}`:"Monthly Totals",
-        data: view==="weekly"?labels.map(w=>rawData[month][w][labels[0]]):labels.map(t=>series[0][t]),
+        label: view === "weekly"
+          ? `Total per week in ${month}`
+          : `Total per asset type in ${month}`,
+        data,
         backgroundColor: [
           "#4e79a7","#f28e2b","#e15759","#76b7b2"
         ]
@@ -54,9 +68,6 @@ function updateChart() {
     options: { responsive: true }
   });
 
-  // update total assets
-  const total = view==="weekly"
-    ? labels.reduce((sum,w)=> sum + Object.values(rawData[month][w]).reduce((a,b)=>a+b,0),0)
-    : labels.reduce((sum,t)=> sum + series[0][t],0);
+  // update totals panel
   document.getElementById("totalAssets").innerText = total;
 }
