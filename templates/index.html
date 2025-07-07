@@ -11,15 +11,14 @@
                     
 
             <div class = 'timeButtons'>
-                <button onclick = "processWeeklyData('Week 1', 'May')"> Weekly </button>
-                <button onclick="processMonthlyData('May')"> Monthly </button>
+                <button onclick = "processWeeklyData('Week 1', 'June')"> Weekly </button>
+                <button onclick="processMonthlyData('June')"> Monthly </button>
 
             </div>
 
 
             <div class = "total-display">
-                <p> Viewing: <span id = "month">0</span> 2025 </p>
-                <p> Viewing: <span id = "week">0</span>  </p>
+                <p> Viewing: <span id = "date"> null </span> 2025 </p>
                 <h1>Total Assets: <span id="sum">0</span></h1>
             </div> 
             
@@ -61,8 +60,8 @@
         function processMonthlyData(exactMonth){
             const month_data = {images:0, videos:0, audio:0, documents:0}
             let value = null
-            for (month in all_data){
-                if (all_data[month]){
+            for (let month in all_data){
+                if (month === exactMonth){
                     value = all_data[month]
                     break
                 }
@@ -81,7 +80,7 @@
             }
             document.getElementById('sum').textContent = sum
 
-            document.getElementById('month').textContent = exactMonth
+            document.getElementById('date').textContent = exactMonth
 
         }
 
@@ -101,8 +100,7 @@
             }
             document.getElementById('sum').textContent = sum
             
-            document.getElementById('month').textContent = exactMonth
-            document.getElementById('week').textContent = exactWeek
+            document.getElementById('date').textContent = exactWeek + " " + exactMonth
 
 
 
@@ -111,6 +109,9 @@
 
 
         }
+        
+        
+        
         const myChart = new Chart("barCharts", {
             type: "bar",
             data: {
@@ -126,7 +127,7 @@
                 }]
             },
             options: {
-                indexAxis: 'y',
+                indexAxis: 'y'
 
             }
         })
