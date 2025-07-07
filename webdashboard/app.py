@@ -8,7 +8,7 @@ data_file = os.path.join(os.path.dirname(__file__), "assets_data.json")
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    return render_template("dashboard.html")
 
 @app.route("/api/data")
 def api_data():

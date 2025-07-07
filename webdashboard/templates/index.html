@@ -1,35 +1,39 @@
-{% extends "base.html" %}
-{% block title %}Dashboard{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>QMA Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-dark text-light">
 
-{% block content %}
-<div class="row mb-3">
-  <div class="col-md-6">
-    <label for="monthSelect" class="form-label">Month</label>
-    <select id="monthSelect" class="form-select"></select>
-  </div>
-  <div class="col-md-6">
-    <label for="viewToggle" class="form-label">View By</label>
-    <select id="viewToggle" class="form-select">
-      <option value="weekly">Weekly</option>
-      <option value="monthly">Monthly</option>
-    </select>
-  </div>
-</div>
-
-<div class="row mb-4">
-  <div class="col">
-    <div class="card bg-secondary text-white">
-      <div class="card-body">
-        <h5 class="card-title">Total Assets</h5>
-        <h2 id="totalAssets">0</h2>
-      </div>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">
+      <img src="{{ url_for('static', filename='img/nmq_logo.png') }}"
+           height="32" alt="NMoQ">
+      QMA Digital Assets
+    </a>
+    <div class="collapse navbar-collapse">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link active" href="#preview" data-bs-toggle="tab">Preview</a></li>
+        <li class="nav-item"><a class="nav-link" href="#stats" data-bs-toggle="tab">Statistics</a></li>
+      </ul>
     </div>
   </div>
-</div>
+</nav>
 
-<div class="row">
-  <div class="col-12">
-    <canvas id="chartCanvas"></canvas>
+<div class="container-fluid my-3">
+  <div class="tab-content">
+    {% block content %}{% endblock %}
   </div>
 </div>
-{% endblock %}
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+</body>
+</html>

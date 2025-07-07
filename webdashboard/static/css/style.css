@@ -1,24 +1,23 @@
 :root {
-  --nmq-blue: #6B86A2; 
+  --nmq-blue: #6B86A2;
   --nmq-dark: #1F2430;
+  --nmq-grey: #2A2E3B;
   --nmq-light: #F5F5F5;
 }
 
-body {
-  background-color: var(--nmq-dark);
-  color: var(--nmq-light);
+body { background: var(--nmq-dark); color: var(--nmq-light); }
+
+.navbar { background: var(--nmq-blue) !important; }
+
+.btn-secondary {
+  background: var(--nmq-grey);
+  border-color: var(--nmq-blue);
 }
 
-.navbar {
-  background-color: var(--nmq-blue) !important;
-}
+.border { border-color: var(--nmq-blue) !important; }
 
-.card.bg-secondary {
-  background-color: #2A2E3B !important;
-}
-
-select.form-select {
-  background-color: #2A2E3B;
+.select.form-select {
+  background: var(--nmq-grey);
   color: var(--nmq-light);
   border: 1px solid var(--nmq-blue);
 }
