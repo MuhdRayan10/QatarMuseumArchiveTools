@@ -4,7 +4,7 @@ let assets = [];
 let previewIndex = 0;
 
 // Fetch the flat list of assets
-fetch("/api/assets")
+fetch("/api/data")
   .then(res => res.json())
   .then(json => {
     assets = json.assets || [];
@@ -106,7 +106,7 @@ function renderStats() {
                : `Items per type in ${month}`,
         data,
         backgroundColor: [
-          "#4e79a7", "#f28e2b", "#e15759", "#76b7b2"
+          "#3498db", "#e74c3c", "#2ecc71", "#f39c12"
         ]
       }]
     },
