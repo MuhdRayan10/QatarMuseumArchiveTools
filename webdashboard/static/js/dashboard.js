@@ -1,6 +1,6 @@
 // static/js/dashboard.js
 
-let assets = [];
+let assets = {};
 let previewIndex = 0;
 
 // Fetch the flat list of assets
@@ -13,7 +13,7 @@ fetch("/api/data")
   })
   .catch(err => console.error("Failed to load assets:", err));
 
-/* ----------- PREVIEW TAB ------------ */
+/* ----------- PREVIEW TAB ------------ 
 function initPreview() {
   updatePreview();
   document.getElementById("prevBtn")
@@ -53,16 +53,16 @@ function updatePreview() {
       </div>
     </div>`;
 }
-
+*/
 /* ----------- STATISTICS TAB ------------ */
 function initStats() {
   // build unique month list
-  const months = Array.from(new Set(assets.map(a => a.month)));
+  //const months = Array.from(new Set(assets.map(a => a.month)));
+  const months = Object.keys(assets["all_data"])
   const sel = document.getElementById("statMonth");
   sel.innerHTML = months.map(m => `<option>${m}</option>`).join("");
   sel.addEventListener("change", renderStats);
-  document.getElementById("statView")
-    .addEventListener("change", renderStats);
+  document.getElementById("statView").addEventListener("change", renderStats);
 
   // trigger first draw
   renderStats();
@@ -73,10 +73,12 @@ function renderStats() {
   const view  = document.getElementById("statView").value;
 
   // filter to this month
-  const monthAssets = assets.filter(a => a.month === month);
+  //const monthAssets = assets.filter(a => a.month === month);
+  const monthAssets = assets["all_data"][month] || [];
 
   // Total assets = count of items in this month
   const total = monthAssets.length;
+  
   document.getElementById("totalAssets").innerText = total;
 
   // Build chart data
@@ -110,6 +112,6 @@ function renderStats() {
         ]
       }]
     },
-    options: { responsive: true }
+    options: { responsive: true, indexAxis: view === "weekly" ? "y" : undefined }
   });
 }
