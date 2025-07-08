@@ -1,7 +1,7 @@
 from PyQt6.QtWidgets import QApplication, QWidget, QLabel, QLineEdit, QPushButton, QVBoxLayout, QHBoxLayout, \
 QFileDialog, QProgressBar, QTabWidget, QTextEdit, QSpinBox, QComboBox, QMessageBox
 
-import r3d, os, threading, time, sys
+import conversion.r3d as r3d, os, threading, time, sys
 import concurrent.futures
 
 class ConverterThread(threading.Thread):
