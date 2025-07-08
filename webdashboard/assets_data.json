@@ -1,0 +1,22 @@
+{
+  "assets": [
+    {
+      "id": 1,
+      "name": "Image_001.jpg",
+      "type": "image",
+      "url": "/static/assets/Image_001.jpg",
+      "thumbnail": "/static/assets/thumb/Image_001.jpg",
+      "month": "June",
+      "week": "Week 1"
+    },
+    {
+      "id": 2,
+      "name": "Video_001.mp4",
+      "type": "video",
+      "url": "/static/assets/Video_001.mp4",
+      "thumbnail": "/static/assets/thumb/Video_001.jpg",
+      "month": "June",
+      "week": "Week 2"
+    }
+  ]
+}
