@@ -7,11 +7,11 @@ let previewIndex = 0;
 fetch("/api/data")
   .then(res => res.json())
   .then(json => {
-    assets = json.assets || [];
-    initPreview();
+    assets = json || {};
+    //initPreview();
     initStats();
   })
-  .catch(err => console.error("Failed to load assets:", err));
+  .catch(err => console.error("Failed to load assets!!!:", err));
 
 /* ----------- PREVIEW TAB ------------ 
 function initPreview() {
@@ -74,44 +74,72 @@ function renderStats() {
 
   // filter to this month
   //const monthAssets = assets.filter(a => a.month === month);
-  const monthAssets = assets["all_data"][month] || [];
+  const monthAssets = assets["all_data"][month] || {};
 
   // Total assets = count of items in this month
-  const total = monthAssets.length;
-  
-  document.getElementById("totalAssets").innerText = total;
+  //const total = monthAssets.length;
+  const month_data = {images:0, videos:0, audio:0, documents:0}
+  let sum = 0;
+  if (view === "monthly"){
+    for (week in monthAssets){
+      month_data.images += monthAssets[week].images
+      month_data.videos += monthAssets[week].videos
+      month_data.audio += monthAssets[week].audio
+      month_data.documents += monthAssets[week].documents
+    }
+    for (number in month_data){
+        sum+=month_data[number];
+    }
+  }   
+  else{
+    // weekly view - defaulting to week 1 for now
+    const week_data = monthAssets["Week 1"] || {};
+    sum = week_data.images + week_data.videos + week_data.audio + week_data.documents;
+  }      
+  document.getElementById("totalAssets").innerText = sum;
 
   // Build chart data
-  let labels = [], data = [];
-  if (view === "weekly") {
-    labels = Array.from(new Set(monthAssets.map(a => a.week)));
-    data = labels.map(wk =>
-      monthAssets.filter(a => a.week === wk).length
-    );
-  } else {
-    labels = Array.from(new Set(monthAssets.map(a => a.type)));
-    data = labels.map(tp =>
-      monthAssets.filter(a => a.type === tp).length
-    );
+  let labels = ["Images", "Videos", "Audio", "Documents"]
+  
+  let data = [];
+  if (view === "monthly"){
+    data = [
+      month_data.images,
+      month_data.videos,
+      month_data.audio,
+      month_data.documents
+    ]
+   
   }
+  
+  else{
+    //weekly view - defaulting to week 1 for now
+    data = [
+      monthAssets["Week 1"].images,
+      monthAssets["Week 1"].videos,
+      monthAssets["Week 1"].audio,
+      monthAssets["Week 1"].documents
+    ];
+  }
+  
 
   // Render Chart.js
   const ctx = document.getElementById("statsChart").getContext("2d");
   if (window._dashChart) window._dashChart.destroy();
   window._dashChart = new Chart(ctx, {
-    type: view === "weekly" ? "bar" : "pie",
+    type: "bar",
     data: {
       labels,
       datasets: [{
         label: view === "weekly"
-               ? `Items per week in ${month}`
-               : `Items per type in ${month}`,
+               ? `Items in Week 1 of ${month}`
+               : `Items in ${month}`,
         data,
         backgroundColor: [
           "#3498db", "#e74c3c", "#2ecc71", "#f39c12"
         ]
       }]
     },
-    options: { responsive: true, indexAxis: view === "weekly" ? "y" : undefined }
+    options: { responsive: true, indexAxis: "y"}
   });
 }
