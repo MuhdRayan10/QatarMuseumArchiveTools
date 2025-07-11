@@ -22,7 +22,7 @@ function initStats() {
 
   // build unique month list
   const months = Object.keys(assets["all_data"]);
-  const lastMonth = months[months.length - 1]; // get the last month
+  const lastMonth = months[0]; // get the last month
 
   renderTimeSelector("monthly", months, lastMonth); // pass lastMonth as selected
   document.getElementById("statView").addEventListener("change", function() {
@@ -130,7 +130,10 @@ function renderStats() {
         ]
       }]
     },
-    options: { responsive: true }
+    options: { 
+      responsive: true,
+      maintainAspectRatio: false
+    }
   });
 
   // Render Pie Chart
@@ -151,7 +154,7 @@ function renderStats() {
       responsive: true,
       plugins: {
         legend: {
-          position: 'bottom'
+          position: 'right'
         },
         datalabels: {
           color: '#222',
