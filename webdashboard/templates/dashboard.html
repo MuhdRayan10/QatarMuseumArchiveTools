@@ -13,7 +13,7 @@
             type="button" role="tab"
             aria-controls="preview"
             aria-selected="true">
-      Preview
+      <i class="bi bi-eye"></i> Preview
     </button>
   </li>
   <li class="nav-item" role="presentation">
@@ -24,27 +24,27 @@
             type="button" role="tab"
             aria-controls="stats"
             aria-selected="false">
-      Statistics
+      <i class="bi bi-bar-chart"></i> Statistics
     </button>
   </li>
 </ul>
 
-<div class="tab-content" id="dashboardTabContent">
+<div class="tab-content bg-white rounded shadow-sm p-4" id="dashboardTabContent">
   <!-- PREVIEW PANE -->
   <div class="tab-pane fade show active" 
        id="preview" 
        role="tabpanel" 
        aria-labelledby="preview-tab">
-    <div class="row mb-2">
+    <div class="row mb-3">
       <div class="col-auto">
-        <button id="prevBtn" class="btn btn-secondary">&larr; Prev</button>
-        <button id="nextBtn" class="btn btn-secondary">Next &rarr;</button>
+        <button id="prevBtn" class="btn btn-outline-primary rounded-pill px-4 me-2">&larr; Prev</button>
+        <button id="nextBtn" class="btn btn-primary rounded-pill px-4">Next &rarr;</button>
       </div>
-      <div class="col-auto">
-        <span id="previewCounter">0 / 0</span>
+      <div class="col-auto d-flex align-items-center">
+        <span id="previewCounter" class="fw-bold text-secondary">0 / 0</span>
       </div>
     </div>
-    <div id="previewArea" class="border rounded p-3 text-center">
+    <div id="previewArea" class="border rounded-3 p-4 text-center bg-light shadow-sm">
       <!-- injected by JS -->
     </div>
   </div>
@@ -54,30 +54,32 @@
        id="stats" 
        role="tabpanel" 
        aria-labelledby="stats-tab">
-    <div class="row mb-3">
-      <div class="col-md-4">
-        <label for="statMonth" class="form-label">Month</label>
+    <div class="row mb-4">
+      <div class="col-md-4 mb-2">
+        <label for="statMonth" class="form-label fw-semibold">Month</label>
         <select id="statMonth" class="form-select"></select>
       </div>
-      <div class="col-md-4">
-        <label for="statView" class="form-label">View By</label>
+      <div class="col-md-4 mb-2">
+        <label for="statView" class="form-label fw-semibold">View By</label>
         <select id="statView" class="form-select">
           <option value="weekly">Weekly</option>
           <option value="monthly">Monthly</option>
         </select>
       </div>
       <div class="col-md-4 d-flex align-items-end">
-        <div class="card bg-secondary text-white w-100">
+        <div class="card border-0 bg-primary text-white w-100 shadow">
           <div class="card-body">
             <h5 class="card-title">Total Assets</h5>
-            <h2 id="totalAssets">0</h2>
+            <h2 id="totalAssets" class="display-5 fw-bold">0</h2>
           </div>
         </div>
       </div>
     </div>
     <div class="row">
       <div class="col">
-        <canvas id="statsChart"></canvas>
+        <div class="bg-light rounded-3 p-3 shadow-sm">
+          <canvas id="statsChart"></canvas>
+        </div>
       </div>
     </div>
   </div>

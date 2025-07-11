@@ -140,6 +140,6 @@ function renderStats() {
         ]
       }]
     },
-    options: { responsive: true, indexAxis: "y"}
+    options: { responsive: true } 
   });
 }
