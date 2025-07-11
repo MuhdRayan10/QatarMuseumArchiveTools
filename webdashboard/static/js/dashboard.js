@@ -108,9 +108,8 @@ function renderStats() {
     ];
   }
   document.getElementById("totalAssets").innerText = sum;
-  
 
-// Render Chart.js
+  // Render Bar Chart
   const ctx = document.getElementById("statsChart").getContext("2d");
   if (window._dashChart) window._dashChart.destroy();
   window._dashChart = new Chart(ctx, {
@@ -128,5 +127,40 @@ function renderStats() {
       }]
     },
     options: { responsive: true }
+  });
+
+  // Render Pie Chart
+  const pieCtx = document.getElementById("pieChart").getContext("2d");
+  if (window._pieChart) window._pieChart.destroy();
+  window._pieChart = new Chart(pieCtx, {
+    type: "pie",
+    data: {
+      labels,
+      datasets: [{
+        data,
+        backgroundColor: [
+          "#3498db", "#e74c3c", "#2ecc71", "#f39c12"
+        ]
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'bottom'
+        },
+        datalabels: {
+          color: '#222',
+          font: { weight: 'bold' },
+          formatter: (value, context) => {
+            const total = context.chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
+            if (!total) return '0%';
+            const pct = (value / total) * 100;
+            return pct.toFixed(1) + '%';
+          }
+        }
+      }
+    },
+    plugins: [ChartDataLabels]
   });
 }
