@@ -129,4 +129,4 @@ function renderStats() {
     },
     options: { responsive: true }
   });
-}/
+}
