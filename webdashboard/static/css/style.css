@@ -63,5 +63,7 @@ body {
 #statsChart {
   background: #fff;
   border-radius: 1rem;
-  padding: 1rem;
+  padding: 0.5rem;
+  height: 340px !important; 
+  max-height: 340px;
 }
