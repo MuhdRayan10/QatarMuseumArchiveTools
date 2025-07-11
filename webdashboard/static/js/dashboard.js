@@ -14,116 +14,103 @@ fetch("/api/data")
   .catch(err => console.error("Failed to load assets!!!:", err));
 
 /* ----------- PREVIEW TAB ------------ 
-function initPreview() {
-  updatePreview();
-  document.getElementById("prevBtn")
-    .addEventListener("click", () => {
-      previewIndex = Math.max(0, previewIndex - 1);
-      updatePreview();
-    });
-  document.getElementById("nextBtn")
-    .addEventListener("click", () => {
-      previewIndex = Math.min(assets.length - 1, previewIndex + 1);
-      updatePreview();
-    });
-}
-
-function updatePreview() {
-  const ctr = document.getElementById("previewCounter");
-  ctr.innerText = `${previewIndex + 1} / ${assets.length}`;
-
-  const slot = document.getElementById("previewArea");
-  slot.innerHTML = "";
-  const a = assets[previewIndex];
-  if (!a) {
-    slot.textContent = "No asset data available";
-    return;
-  }
-
-  slot.innerHTML = `
-    <div class="card bg-secondary text-white mx-auto" style="max-width: 400px;">
-      <div class="card-body">
-        <h5 class="card-title">${a.name}</h5>
-        <ul class="list-group list-group-flush text-white">
-          <li class="list-group-item bg-secondary">Type: ${a.type}</li>
-          <li class="list-group-item bg-secondary">Month: ${a.month}</li>
-          <li class="list-group-item bg-secondary">Week: ${a.week}</li>
-          <li class="list-group-item bg-secondary">URL: ${a.url}</li>
-        </ul>
-      </div>
-    </div>`;
-}
+TO DO
 */
 /* ----------- STATISTICS TAB ------------ */
 function initStats() {
   // build unique month list
-  //const months = Array.from(new Set(assets.map(a => a.month)));
-  const months = Object.keys(assets["all_data"])
-  const sel = document.getElementById("statMonth");
-  sel.innerHTML = months.map(m => `<option>${m}</option>`).join("");
-  sel.addEventListener("change", renderStats);
-  document.getElementById("statView").addEventListener("change", renderStats);
-
+  const months = Object.keys(assets["all_data"]);
+  renderTimeSelector("monthly", months);
+  document.getElementById("statView").addEventListener("change", function() {
+    const view = this.value;
+    if (view === "weekly") {
+      // Get weeks for the first month by default
+      const month = document.getElementById("statMonth")?.value || months[0];
+      const weeks = Object.keys(assets["all_data"][month] || {});
+      renderTimeSelector("weekly", weeks, month, months);
+    } else {
+      renderTimeSelector("monthly", months);
+    }
+    renderStats();
+  });
   // trigger first draw
   renderStats();
 }
 
+function renderTimeSelector(view, options, selectedMonth, months) {
+  const container = document.getElementById("statTimeSelector");
+  if (view == "monthly") {
+    container.innerHTML = `
+      <label for="statMonth" class="form-label fw-semibold">Month</label>
+      <select id="statMonth" class="form-select">
+        ${options.map(m=> `<option>${m}<option>`).join("")}
+      </select>`;
+      document.getElementById("statMonth").addEventListener("change", renderStats);   
+  }
+  else {
+    container.innerHTML = `
+      <label for="statMonth" class="form-label fw-semibold">Month</label>}
+      <select id="statMonth" class="form-select mb-2">
+        ${months.map(m => `<option${m === selectedMonth ? "selected" : ""}>${m}</option>`).join("")}
+      </select>
+      <label for="statWeek" class="form-label fw-semibold mt-2">Week</label>
+      <select id="statWeek" class="form-select">
+        ${options.map(w => `<option>${w}</option>`).join("")}
+      </select>`;
+    document.getElementById("statMonth").addEventListener("change", function () {
+      const month = this.value;
+      const weeks = Object.keys(assets["all_data"][month] || {});
+      renderTimeSelector("weekly", weeks, month, months);
+      renderStats();
+    });
+    document.getElementById("statWeek").addEventListener("change", renderStats);
+  }
+}
+
 function renderStats() {
-  const month = document.getElementById("statMonth").value;
   const view  = document.getElementById("statView").value;
+  let month, week;
+  if (view === "weekly") {
+    month = document.getElementById("statMonth").value;
+    week = document.getElementById("statWeek").value;
+  } else {
+    month = document.getElementById("statMonth").value;
+  }
 
-  // filter to this month
-  //const monthAssets = assets.filter(a => a.month === month);
   const monthAssets = assets["all_data"][month] || {};
-
-  // Total assets = count of items in this month
-  //const total = monthAssets.length;
-  const month_data = {images:0, videos:0, audio:0, documents:0}
+  const month_data = {images:0, videos:0, audio:0, documents:0};
   let sum = 0;
-  if (view === "monthly"){
-    for (week in monthAssets){
-      month_data.images += monthAssets[week].images
-      month_data.videos += monthAssets[week].videos
-      month_data.audio += monthAssets[week].audio
-      month_data.documents += monthAssets[week].documents
-    }
-    for (number in month_data){
-        sum+=month_data[number];
-    }
-  }   
-  else{
-    // weekly view - defaulting to week 1 for now
-    const week_data = monthAssets["Week 1"] || {};
-    sum = week_data.images + week_data.videos + week_data.audio + week_data.documents;
-  }      
-  document.getElementById("totalAssets").innerText = sum;
-
-  // Build chart data
-  let labels = ["Images", "Videos", "Audio", "Documents"]
-  
   let data = [];
-  if (view === "monthly"){
+  let labels = ["Images", "Videos", "Audio", "Documents"];
+
+  if (view === "monthly") {
+    for (let w in monthAssets) {
+      month_data.images += monthAssets[w].images;
+      month_data.videos += monthAssets[w].videos;
+      month_data.audio += monthAssets[w].audio;
+      month_data.documents += monthAssets[w].documents;
+    }
+    for (let n in month_data) sum += month_data[n];
     data = [
       month_data.images,
       month_data.videos,
       month_data.audio,
       month_data.documents
-    ]
-   
-  }
-  
-  else{
-    //weekly view - defaulting to week 1 for now
+    ];
+  } else {
+    const week_data = monthAssets[week] || {images:0, videos:0, audio:0, documents:0};
+    sum = week_data.images + week_data.videos + week_data.audio + week_data.documents;
     data = [
-      monthAssets["Week 1"].images,
-      monthAssets["Week 1"].videos,
-      monthAssets["Week 1"].audio,
-      monthAssets["Week 1"].documents
+      week_data.images,
+      week_data.videos,
+      week_data.audio,
+      week_data.documents
     ];
   }
+  document.getElementById("totalAssets").innerText = sum;
   
 
-  // Render Chart.js
+// Render Chart.js
   const ctx = document.getElementById("statsChart").getContext("2d");
   if (window._dashChart) window._dashChart.destroy();
   window._dashChart = new Chart(ctx, {
@@ -132,7 +119,7 @@ function renderStats() {
       labels,
       datasets: [{
         label: view === "weekly"
-               ? `Items in Week 1 of ${month}`
+               ? `Items in ${week} of ${month}`
                : `Items in ${month}`,
         data,
         backgroundColor: [
@@ -140,6 +127,6 @@ function renderStats() {
         ]
       }]
     },
-    options: { responsive: true } 
+    options: { responsive: true }
   });
-}
+}/
