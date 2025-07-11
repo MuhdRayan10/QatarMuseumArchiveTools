@@ -3,6 +3,34 @@ body {
   background: #f7f9fb;
 }
 
+.classy-navbar {
+  background: linear-gradient(90deg, #f8fafc 60%, #e3ecfa 100%);
+  border-bottom: 1.5px solid #e3e8ee;
+  border-radius: 1rem;
+  box-shadow: 0 2px 12px rgba(80,120,200,0.06);
+}
+
+
+.navbar-brand {
+  color: #4879da !important;
+  font-family: 'Segoe UI', 'Arial', sans-serif;
+  letter-spacing: 0.02em;
+}
+
+
+.navbar-brand img {
+  background: #fff;
+}
+
+.navbar .nav-link {
+  color: #234078 !important;
+  transition: color 0.2s;
+}
+
+.navbar .nav-link:hover {
+  color: #0d6efd !important;
+}
+
 .nav-tabs .nav-link.active {
   background-color: #fff;
   border-color: #dee2e6 #dee2e6 #fff;
