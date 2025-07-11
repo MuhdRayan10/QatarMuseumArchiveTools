@@ -64,5 +64,12 @@ body {
   background: #fff;
   border-radius: 1rem;
   padding: 0.5rem;
-  height: 340px; 
+  height: 320px !important; 
+}
+
+#pieChart {
+  background: #fff;
+  border-radius: 1rem;
+  padding: 0.5rem;
+  height: 320px !important;
 }

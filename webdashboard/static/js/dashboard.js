@@ -9,7 +9,6 @@ fetch("/api/data")
   .then(json => {
     assets = json || {};
     //initPreview();
-    initStats();
   })
   .catch(err => console.error("Failed to load assets!!!:", err));
 
@@ -18,18 +17,23 @@ TO DO
 */
 /* ----------- STATISTICS TAB ------------ */
 function initStats() {
+  // set the view to monthly by default
+  document.getElementById("statView").value = "monthly";
+
   // build unique month list
   const months = Object.keys(assets["all_data"]);
-  renderTimeSelector("monthly", months);
+  const lastMonth = months[months.length - 1]; // get the last month
+
+  renderTimeSelector("monthly", months, lastMonth); // pass lastMonth as selected
   document.getElementById("statView").addEventListener("change", function() {
     const view = this.value;
     if (view === "weekly") {
-      // Get weeks for the first month by default
-      const month = document.getElementById("statMonth")?.value || months[0];
+      // Get weeks for the last month by default
+      const month = document.getElementById("statMonth")?.value || lastMonth;
       const weeks = Object.keys(assets["all_data"][month] || {});
       renderTimeSelector("weekly", weeks, month, months);
     } else {
-      renderTimeSelector("monthly", months);
+      renderTimeSelector("monthly", months, lastMonth);
     }
     renderStats();
   });
@@ -43,15 +47,15 @@ function renderTimeSelector(view, options, selectedMonth, months) {
     container.innerHTML = `
       <label for="statMonth" class="form-label fw-semibold">Month</label>
       <select id="statMonth" class="form-select">
-        ${options.map(m=> `<option>${m}<option>`).join("")}
+        ${options.map(m => `<option${m === selectedMonth ? " selected" : ""}>${m}</option>`).join("")}
       </select>`;
-      document.getElementById("statMonth").addEventListener("change", renderStats);   
+    document.getElementById("statMonth").addEventListener("change", renderStats);   
   }
   else {
     container.innerHTML = `
-      <label for="statMonth" class="form-label fw-semibold">Month</label>}
+      <label for="statMonth" class="form-label fw-semibold">Month</label>
       <select id="statMonth" class="form-select mb-2">
-        ${months.map(m => `<option${m === selectedMonth ? "selected" : ""}>${m}</option>`).join("")}
+        ${months.map(m => `<option${m === selectedMonth ? " selected" : ""}>${m}</option>`).join("")}
       </select>
       <label for="statWeek" class="form-label fw-semibold mt-2">Week</label>
       <select id="statWeek" class="form-select">
@@ -164,3 +168,13 @@ function renderStats() {
     plugins: [ChartDataLabels]
   });
 }
+
+document.addEventListener("DOMContentLoaded", function() {
+  // Listen for statistics tab activation
+  const statsTab = document.querySelector('button[data-bs-target="#stats"]');
+  if (statsTab) {
+    statsTab.addEventListener('shown.bs.tab', function () {
+      initStats();
+    });
+  }
+});
