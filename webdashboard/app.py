@@ -4,7 +4,7 @@ import json, os
 app = Flask(__name__, static_folder="static", template_folder="templates")
 
 # temporarily reading from json file
-data_file = os.path.join(os.path.dirname(__file__), "assets_data.json")
+data_file = os.path.join(os.path.dirname(__file__), "alt_assets.json")
 
 @app.route("/")
 def index():
