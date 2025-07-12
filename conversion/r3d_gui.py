@@ -1,7 +1,7 @@
 from PyQt6.QtWidgets import QApplication, QWidget, QLabel, QLineEdit, QPushButton, QVBoxLayout, QHBoxLayout, \
 QFileDialog, QProgressBar, QTabWidget, QTextEdit, QSpinBox, QComboBox, QMessageBox
 
-import conversion.r3d as r3d, os, threading, time, sys
+import r3d, os, threading, time, sys
 import concurrent.futures
 
 class ConverterThread(threading.Thread):
@@ -57,7 +57,7 @@ class MainWindow(QWidget):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("R3D → MP4 Converter")
-        self.resize(700, 500)
+        self.resize(1000, 500)
 
         self.dir_input = QLineEdit()
         browse_btn = QPushButton("Browse")
@@ -171,7 +171,8 @@ class MainWindow(QWidget):
             self.thread.join()
         super().closeEvent(event)
 
-app = QApplication(sys.argv)
-win = MainWindow()
-win.show()
-sys.exit(app.exec())
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    win = MainWindow()
+    win.show()
+    sys.exit(app.exec())
