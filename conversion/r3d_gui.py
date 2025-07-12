@@ -74,8 +74,8 @@ class MainWindow(QWidget):
         self.concurrent.setRange(1, os.cpu_count() or 4)
         self.concurrent.setValue(1)
 
-        export_btn = QPushButton("Export")
-        export_btn.clicked.connect(self.start_export)
+        self.export_btn = QPushButton("Export")
+        self.export_btn.clicked.connect(self.start_export)
 
         controls = QHBoxLayout()
         controls.addWidget(QLabel("Source:"))
@@ -104,7 +104,7 @@ class MainWindow(QWidget):
 
         controls.addWidget(QLabel("Workers:"))
         controls.addWidget(self.concurrent)
-        controls.addWidget(export_btn)
+        controls.addWidget(self.export_btn)
 
         self.tabs = QTabWidget()
 
@@ -173,9 +173,12 @@ class MainWindow(QWidget):
 
         def done():
             self.log.append("Conversion complete!")
+            self.export_btn.setEnabled(True)
 
         self.thread = ConverterThread(src, dst, res, workers, update, done, export_format)
         self.thread.start()
+        self.export_btn.setEnabled(False)
+
     def closeEvent(self, event):
         if self.thread and self.thread.is_alive():
             self.thread.stop()
