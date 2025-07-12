@@ -1,23 +1,25 @@
 from PyQt6.QtWidgets import QApplication, QWidget, QLabel, QLineEdit, QPushButton, QVBoxLayout, QHBoxLayout, \
-QFileDialog, QProgressBar, QTabWidget, QTextEdit, QSpinBox, QComboBox, QMessageBox
+QFileDialog, QProgressBar, QTabWidget, QTextEdit, QSpinBox, QComboBox, QMessageBox, QRadioButton, QButtonGroup
 
 import r3d, os, threading, time, sys
 import concurrent.futures
 
 class ConverterThread(threading.Thread):
-    def __init__(self, src_dir, dst_dir, resolution, workers, update_cb, done_cb):
+    def __init__(self, src_dir, dst_dir, resolution, workers, update_cb, done_cb, export_format="mp4"):
         super().__init__()
         self.src_dir = src_dir
-        self.dst_dir = dst_dir
+        self.dst_dir = os.path.join(dst_dir, os.path.basename(src_dir) + '_converted')
         self.resolution = resolution
         self.workers = workers
         self.update = update_cb
         self.done = done_cb
         self._stop = False
+        self.export_format = export_format
+
+        os.makedirs(self.dst_dir, exist_ok=True)
 
     def run(self):
         start = time.time()
-        # gather all .r3d files
         files = [
             os.path.join(root, f)
             for root, _, fs in os.walk(self.src_dir)
@@ -31,21 +33,18 @@ class ConverterThread(threading.Thread):
             future_to_src = {
                 exe.submit(r3d.convert_file, src, os.path.join(self.dst_dir,
                     os.path.dirname(os.path.relpath(src, self.src_dir))),
-                    self.resolution): src for src in files}
+                    self.resolution, self.export_format): src for src in files}
 
             for future in concurrent.futures.as_completed(future_to_src):
                 if self._stop:
                     break
                 src = future_to_src[future]
-                
                 future.result()
-
                 processed += 1
                 size_handled += os.path.getsize(src)
                 elapsed = time.time() - start
                 rate = size_handled / elapsed if elapsed > 0 else 0
                 eta = (total - processed) * (elapsed / processed) if processed > 0 else 0
-                
                 self.update(processed, total, size_handled, rate, eta, elapsed)
 
         self.done()
@@ -83,11 +82,22 @@ class MainWindow(QWidget):
         controls.addWidget(self.dir_input)
         controls.addWidget(browse_btn)
 
-        dst_layout = QHBoxLayout()
-        dst_layout.addWidget(QLabel("Destination Directory:"))
-        dst_layout.addWidget(self.dst_input)
-        dst_layout.addWidget(dst_browse)
-        controls.addLayout(dst_layout)
+        
+        controls.addWidget(QLabel("Destination Directory:"))
+        controls.addWidget(self.dst_input)
+        controls.addWidget(dst_browse)
+
+        # Add radio buttons for format selection
+        self.format_group = QButtonGroup(self)
+        self.mp4_radio = QRadioButton("Export as MP4")
+        self.mov_radio = QRadioButton("Export as MOV")
+        self.mp4_radio.setChecked(True)
+        self.format_group.addButton(self.mp4_radio)
+        self.format_group.addButton(self.mov_radio)
+
+        format_layout = QHBoxLayout()
+        format_layout.addWidget(self.mp4_radio)
+        format_layout.addWidget(self.mov_radio)
 
         controls.addWidget(QLabel("Compression R:"))
         controls.addWidget(self.res_combo)
@@ -118,6 +128,7 @@ class MainWindow(QWidget):
 
         layout = QVBoxLayout()
         layout.addLayout(controls)
+        layout.addLayout(format_layout)
         layout.addWidget(self.tabs)
         self.setLayout(layout)
 
@@ -141,6 +152,7 @@ class MainWindow(QWidget):
             return
         res = int(self.res_combo.currentText())
         workers = self.concurrent.value()
+        export_format = "mp4" if self.mp4_radio.isChecked() else "mov"
 
         self.progress_bar.setValue(0)
         self.progress_bar.setMaximum(1)
@@ -162,9 +174,8 @@ class MainWindow(QWidget):
         def done():
             self.log.append("Conversion complete!")
 
-        self.thread = ConverterThread(src, dst, res, workers, update, done)
+        self.thread = ConverterThread(src, dst, res, workers, update, done, export_format)
         self.thread.start()
-
     def closeEvent(self, event):
         if self.thread and self.thread.is_alive():
             self.thread.stop()

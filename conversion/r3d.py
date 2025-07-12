@@ -44,19 +44,19 @@ def mov_to_mp4(input_path):
     return output_path
 
 
-def convert_file(input_path, output_dir, resolution="2"):
-    
+def convert_file(input_path, output_dir, resolution="2", export_format="mp4"):
     os.makedirs(output_dir, exist_ok=True)
-    
     mov_path = r3d_to_mov(input_path, output_dir, resolution)
-    mp4_path = mov_to_mp4(mov_path)
-    final_mp4 = os.path.join(output_dir, os.path.basename(mp4_path))
-    
-    os.replace(mp4_path, final_mp4)
-    os.remove(mov_path)
-
-    add_log_entry(input_path, final_mp4)
-    return final_mp4
+    if export_format == "mp4":
+        mp4_path = mov_to_mp4(mov_path)
+        final_output = os.path.join(output_dir, os.path.basename(mp4_path))
+        os.replace(mp4_path, final_output)
+        os.remove(mov_path)
+    else:  # export_format == "mov"
+        final_output = os.path.join(output_dir, os.path.basename(mov_path))
+        os.replace(mov_path, final_output)
+    add_log_entry(input_path, final_output)
+    return final_output
 
 def convert_directory(input_dir):
 
