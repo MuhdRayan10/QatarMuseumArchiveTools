@@ -1,0 +1,918 @@
+{
+  "search_result_resource": {
+    "search_result": {
+      "asset_group_count": {
+        "entry": []
+      },
+      "asset_id_list": [
+        "02384c062ecdf2a74baa7d9e0e35b34e216e4f15",
+        "4387ab9cf35d2eaade701684cd848571c0f610b7",
+        "a98de78692c99cccd15caaf9aaaf01e179fb1a37",
+        "c5d7237a6acf2514cd7f2af8c1cc3c197823b31b",
+        "ef6ab4a4c485ec04dde69dcad84500459ab3f678"
+      ],
+      "contains_invalid_conditions": false,
+      "facet_field_response_list": [],
+      "hit_count": 5,
+      "offset": 0,
+      "total_hit_count": 5
+    },
+    "asset_list": [
+      {
+        "access_control_descriptor": {
+          "permissions_map": {
+            "entry": [
+              {
+                "key": "text.securityPolicy.permission.Custom04Permission",
+                "value": false
+              },
+              {
+                "key": "text.securityPolicy.permission.ContentEditPermission",
+                "value": true
+              },
+              {
+                "key": "text.securityPolicy.permission.AssetViewPermission",
+                "value": true
+              },
+              {
+                "key": "text.securityPolicy.permission.ProjectViewPermission",
+                "value": false
+              },
+              {
+                "key": "text.securityPolicy.permission.MembershipEditPermission",
+                "value": true
+              },
+              {
+                "key": "text.securityPolicy.permission.Custom03Permission",
+                "value": false
+              },
+              {
+                "key": "text.securityPolicy.permission.MetaDataEditPermission",
+                "value": true
+              },
+              {
+                "key": "text.securityPolicy.permission.EditParentsPermission",
+                "value": true
+              },
+              {
+                "key": "text.securityPolicy.permission.Custom02Permission",
+                "value": false
+              },
+              {
+                "key": "text.securityPolicy.permission.ExportPermission",
+                "value": true
+              },
+              {
+                "key": "text.securityPolicy.permission.SummaryViewPermission",
+                "value": true
+              },
+              {
+                "key": "text.securityPolicy.permission.PreviewViewPermission",
+                "value": true
+              },
+              {
+                "key": "text.securityPolicy.permission.SubscribePermission",
+                "value": true
+              },
+              {
+                "key": "text.securityPolicy.permission.DeleteAssetPermission",
+                "value": true
+              },
+              {
+                "key": "text.securityPolicy.permission.Custom01Permission",
+                "value": false
+              }
+            ]
+          }
+        },
+        "asset_content_info": {
+          "master_content": {
+            "content_checksum": "90794153f808eb10f4c4e3ebedab91c7",
+            "content_data": {
+              "data_source": "NO_CONTENT",
+              "temp_file": false
+            },
+            "content_kind": "MASTER",
+            "content_manager_id": "ARTESIA.CONTENT.FILESYSTEM",
+            "content_path": "data\\repository\\original\\vol0\\0\\Screenshot 2024-02-13 195624_c080fce2dce3edaec1af9d2a45ffff262ac50268.png",
+            "content_size": 69043,
+            "height": 805,
+            "id": "c080fce2dce3edaec1af9d2a45ffff262ac50268",
+            "mime_type": "image/png",
+            "name": "Screenshot 2024-02-13 195624.png",
+            "unit_of_size": "BYTES",
+            "url": "/otmmapi/v6/renditions/c080fce2dce3edaec1af9d2a45ffff262ac50268",
+            "width": 816
+          }
+        },
+        "asset_id": "02384c062ecdf2a74baa7d9e0e35b34e216e4f15",
+        "asset_lock_state_last_update_date": "2024-10-22T10:43:48.56+03:00",
+        "asset_lock_state_user_id": "1064",
+        "asset_state": "NORMAL",
+        "asset_state_last_update_date": "2024-10-22T10:42:57.403+03:00",
+        "asset_state_user_id": "1064",
+        "checked_out": false,
+        "content_editable": true,
+        "content_lock_state_last_update_date": "2024-10-22T10:42:50.277+03:00",
+        "content_lock_state_user_id": "1064",
+        "content_lock_state_user_name": "rlekkala",
+        "content_size": 69043,
+        "content_state": "NORMAL",
+        "content_state_last_update_date": "2024-10-22T10:42:49.41+03:00",
+        "content_state_user_id": "1064",
+        "content_state_user_name": "Ramesh BabuLekkala",
+        "content_type": "BITMAP",
+        "creator_id": "1064",
+        "date_imported": "2024-10-22T10:42:46.637+03:00",
+        "date_last_updated": "2024-10-22T10:42:57.403+03:00",
+        "deleted": false,
+        "delivery_service_url": "http://otmmqacr1:38080/adaptivemedia/rendition?id=02384c062ecdf2a74baa7d9e0e35b34e216e4f15",
+        "expired": false,
+        "import_job_id": 646,
+        "import_user_name": "rlekkala",
+        "latest_version": true,
+        "legacy_model_id": 10012,
+        "locked": false,
+        "master_content_info": {
+          "content_checksum": "90794153f808eb10f4c4e3ebedab91c7",
+          "content_data": {
+            "data_source": "NO_CONTENT",
+            "temp_file": false
+          },
+          "content_kind": "MASTER",
+          "content_manager_id": "ARTESIA.CONTENT.FILESYSTEM",
+          "content_path": "data\\repository\\original\\vol0\\0\\Screenshot 2024-02-13 195624_c080fce2dce3edaec1af9d2a45ffff262ac50268.png",
+          "content_size": 69043,
+          "height": 805,
+          "id": "c080fce2dce3edaec1af9d2a45ffff262ac50268",
+          "mime_type": "image/png",
+          "name": "Screenshot 2024-02-13 195624.png",
+          "unit_of_size": "BYTES",
+          "url": "/otmmapi/v6/renditions/c080fce2dce3edaec1af9d2a45ffff262ac50268",
+          "width": 816
+        },
+        "metadata_lock_state_user_name": "rlekkala",
+        "metadata_model_id": "QMA.MODEL.COLLECTIONS.IMAGE",
+        "metadata_state_user_name": "Ramesh BabuLekkala",
+        "mime_type": "image/png",
+        "name": "Screenshot 2024-02-13 195624.png",
+        "original_asset_id": "02384c062ecdf2a74baa7d9e0e35b34e216e4f15",
+        "rendition_content": {
+          "thumbnail_content": {
+            "content_data": {
+              "data_source": "NO_CONTENT",
+              "temp_file": false
+            },
+            "content_kind": "THUMBNAIL",
+            "content_manager_id": "ARTESIA.CONTENT.FILESYSTEM",
+            "content_path": "data\\repository\\thumb\\vol0\\0\\Screenshot 2024-02-13 195624-T_0e2d3b0d54cd029879da26d4feb9af876c57fee2.png",
+            "content_size": 20704,
+            "height": 375,
+            "id": "0e2d3b0d54cd029879da26d4feb9af876c57fee2",
+            "mime_type": "image/png",
+            "name": "Screenshot 2024-02-13 195624-T.png",
+            "unit_of_size": "BYTES",
+            "url": "/otmmapi/v6/renditions/0e2d3b0d54cd029879da26d4feb9af876c57fee2",
+            "width": 380
+          },
+          "preview_content": {
+            "content_data": {
+              "data_source": "NO_CONTENT",
+              "temp_file": false
+            },
+            "content_kind": "PREVIEW",
+            "content_manager_id": "ARTESIA.CONTENT.FILESYSTEM",
+            "content_path": "data\\repository\\screen\\vol0\\0\\Screenshot 2024-02-13 195624-S_9425ecf287510edb21eb1ba18f3ed8eeba06fc85.png",
+            "content_size": 67210,
+            "height": 768,
+            "id": "9425ecf287510edb21eb1ba18f3ed8eeba06fc85",
+            "mime_type": "image/png",
+            "name": "Screenshot 2024-02-13 195624-S.png",
+            "unit_of_size": "BYTES",
+            "url": "/otmmapi/v6/renditions/9425ecf287510edb21eb1ba18f3ed8eeba06fc85",
+            "width": 778
+          }
+        },
+        "subscribed_to": false,
+        "thumbnail_content_id": "0e2d3b0d54cd029879da26d4feb9af876c57fee2",
+        "version": 1
+      },
+      {
+        "access_control_descriptor": {
+          "permissions_map": {
+            "entry": [
+              {
+                "key": "text.securityPolicy.permission.Custom04Permission",
+                "value": false
+              },
+              {
+                "key": "text.securityPolicy.permission.ContentEditPermission",
+                "value": true
+              },
+              {
+                "key": "text.securityPolicy.permission.AssetViewPermission",
+                "value": true
+              },
+              {
+                "key": "text.securityPolicy.permission.ProjectViewPermission",
+                "value": false
+              },
+              {
+                "key": "text.securityPolicy.permission.MembershipEditPermission",
+                "value": true
+              },
+              {
+                "key": "text.securityPolicy.permission.Custom03Permission",
+                "value": false
+              },
+              {
+                "key": "text.securityPolicy.permission.MetaDataEditPermission",
+                "value": true
+              },
+              {
+                "key": "text.securityPolicy.permission.EditParentsPermission",
+                "value": true
+              },
+              {
+                "key": "text.securityPolicy.permission.Custom02Permission",
+                "value": false
+              },
+              {
+                "key": "text.securityPolicy.permission.ExportPermission",
+                "value": true
+              },
+              {
+                "key": "text.securityPolicy.permission.SummaryViewPermission",
+                "value": true
+              },
+              {
+                "key": "text.securityPolicy.permission.PreviewViewPermission",
+                "value": true
+              },
+              {
+                "key": "text.securityPolicy.permission.SubscribePermission",
+                "value": true
+              },
+              {
+                "key": "text.securityPolicy.permission.DeleteAssetPermission",
+                "value": true
+              },
+              {
+                "key": "text.securityPolicy.permission.Custom01Permission",
+                "value": false
+              }
+            ]
+          }
+        },
+        "asset_content_info": {
+          "master_content": {
+            "content_checksum": "bef5ca43b3a1a3e8b5f6196f75905da7",
+            "content_data": {
+              "data_source": "NO_CONTENT",
+              "temp_file": false
+            },
+            "content_kind": "MASTER",
+            "content_manager_id": "ARTESIA.CONTENT.FILESYSTEM",
+            "content_path": "data\\repository\\original\\vol0\\0\\Screenshot 2024-02-14 232743_a4b741fdd386e29b05b88ff128ec355bc32cd34b.png",
+            "content_size": 69714,
+            "height": 811,
+            "id": "a4b741fdd386e29b05b88ff128ec355bc32cd34b",
+            "mime_type": "image/png",
+            "name": "Screenshot 2024-02-14 232743.png",
+            "unit_of_size": "BYTES",
+            "url": "/otmmapi/v6/renditions/a4b741fdd386e29b05b88ff128ec355bc32cd34b",
+            "width": 774
+          }
+        },
+        "asset_id": "4387ab9cf35d2eaade701684cd848571c0f610b7",
+        "asset_lock_state_last_update_date": "2024-10-23T09:34:22.52+03:00",
+        "asset_lock_state_user_id": "1684",
+        "asset_state": "NORMAL",
+        "asset_state_last_update_date": "2024-10-22T10:43:19.067+03:00",
+        "asset_state_user_id": "1064",
+        "checked_out": false,
+        "content_editable": true,
+        "content_lock_state_last_update_date": "2024-10-22T10:42:50.277+03:00",
+        "content_lock_state_user_id": "1064",
+        "content_lock_state_user_name": "rlekkala",
+        "content_size": 69714,
+        "content_state": "NORMAL",
+        "content_state_last_update_date": "2024-10-22T10:42:47.717+03:00",
+        "content_state_user_id": "1064",
+        "content_state_user_name": "Ramesh BabuLekkala",
+        "content_type": "BITMAP",
+        "creator_id": "1064",
+        "date_imported": "2024-10-22T10:42:46.56+03:00",
+        "date_last_updated": "2024-10-22T10:43:19.067+03:00",
+        "deleted": false,
+        "delivery_service_url": "http://otmmqacr1:38080/adaptivemedia/rendition?id=4387ab9cf35d2eaade701684cd848571c0f610b7",
+        "expired": false,
+        "import_job_id": 646,
+        "import_user_name": "rlekkala",
+        "latest_version": true,
+        "legacy_model_id": 10012,
+        "locked": false,
+        "master_content_info": {
+          "content_checksum": "bef5ca43b3a1a3e8b5f6196f75905da7",
+          "content_data": {
+            "data_source": "NO_CONTENT",
+            "temp_file": false
+          },
+          "content_kind": "MASTER",
+          "content_manager_id": "ARTESIA.CONTENT.FILESYSTEM",
+          "content_path": "data\\repository\\original\\vol0\\0\\Screenshot 2024-02-14 232743_a4b741fdd386e29b05b88ff128ec355bc32cd34b.png",
+          "content_size": 69714,
+          "height": 811,
+          "id": "a4b741fdd386e29b05b88ff128ec355bc32cd34b",
+          "mime_type": "image/png",
+          "name": "Screenshot 2024-02-14 232743.png",
+          "unit_of_size": "BYTES",
+          "url": "/otmmapi/v6/renditions/a4b741fdd386e29b05b88ff128ec355bc32cd34b",
+          "width": 774
+        },
+        "metadata_lock_state_user_name": "jponnusamy",
+        "metadata_model_id": "QMA.MODEL.COLLECTIONS.IMAGE",
+        "metadata_state_user_name": "Ramesh BabuLekkala",
+        "mime_type": "image/png",
+        "name": "Screenshot 2024-02-14 232743.png",
+        "original_asset_id": "4387ab9cf35d2eaade701684cd848571c0f610b7",
+        "rendition_content": {
+          "thumbnail_content": {
+            "content_data": {
+              "data_source": "NO_CONTENT",
+              "temp_file": false
+            },
+            "content_kind": "THUMBNAIL",
+            "content_manager_id": "ARTESIA.CONTENT.FILESYSTEM",
+            "content_path": "data\\repository\\thumb\\vol0\\0\\Screenshot 2024-02-14 232743-T_6266a538e217db339ed03fbfc632390824f98f5e.png",
+            "content_size": 21032,
+            "height": 375,
+            "id": "6266a538e217db339ed03fbfc632390824f98f5e",
+            "mime_type": "image/png",
+            "name": "Screenshot 2024-02-14 232743-T.png",
+            "unit_of_size": "BYTES",
+            "url": "/otmmapi/v6/renditions/6266a538e217db339ed03fbfc632390824f98f5e",
+            "width": 358
+          },
+          "preview_content": {
+            "content_data": {
+              "data_source": "NO_CONTENT",
+              "temp_file": false
+            },
+            "content_kind": "PREVIEW",
+            "content_manager_id": "ARTESIA.CONTENT.FILESYSTEM",
+            "content_path": "data\\repository\\screen\\vol0\\0\\Screenshot 2024-02-14 232743-S_918c3ebfc75fba193476f07aac71db7f08baf3ad.png",
+            "content_size": 69563,
+            "height": 768,
+            "id": "918c3ebfc75fba193476f07aac71db7f08baf3ad",
+            "mime_type": "image/png",
+            "name": "Screenshot 2024-02-14 232743-S.png",
+            "unit_of_size": "BYTES",
+            "url": "/otmmapi/v6/renditions/918c3ebfc75fba193476f07aac71db7f08baf3ad",
+            "width": 733
+          }
+        },
+        "subscribed_to": false,
+        "thumbnail_content_id": "6266a538e217db339ed03fbfc632390824f98f5e",
+        "version": 1
+      },
+      {
+        "access_control_descriptor": {
+          "permissions_map": {
+            "entry": [
+              {
+                "key": "text.securityPolicy.permission.Custom04Permission",
+                "value": false
+              },
+              {
+                "key": "text.securityPolicy.permission.ContentEditPermission",
+                "value": true
+              },
+              {
+                "key": "text.securityPolicy.permission.AssetViewPermission",
+                "value": true
+              },
+              {
+                "key": "text.securityPolicy.permission.ProjectViewPermission",
+                "value": false
+              },
+              {
+                "key": "text.securityPolicy.permission.MembershipEditPermission",
+                "value": true
+              },
+              {
+                "key": "text.securityPolicy.permission.Custom03Permission",
+                "value": false
+              },
+              {
+                "key": "text.securityPolicy.permission.MetaDataEditPermission",
+                "value": true
+              },
+              {
+                "key": "text.securityPolicy.permission.EditParentsPermission",
+                "value": true
+              },
+              {
+                "key": "text.securityPolicy.permission.Custom02Permission",
+                "value": false
+              },
+              {
+                "key": "text.securityPolicy.permission.ExportPermission",
+                "value": true
+              },
+              {
+                "key": "text.securityPolicy.permission.SummaryViewPermission",
+                "value": true
+              },
+              {
+                "key": "text.securityPolicy.permission.PreviewViewPermission",
+                "value": true
+              },
+              {
+                "key": "text.securityPolicy.permission.SubscribePermission",
+                "value": true
+              },
+              {
+                "key": "text.securityPolicy.permission.DeleteAssetPermission",
+                "value": true
+              },
+              {
+                "key": "text.securityPolicy.permission.Custom01Permission",
+                "value": false
+              }
+            ]
+          }
+        },
+        "asset_content_info": {
+          "master_content": {
+            "content_checksum": "ca89dac9e8dc92c9343950702dac9c45",
+            "content_data": {
+              "data_source": "NO_CONTENT",
+              "temp_file": false
+            },
+            "content_kind": "MASTER",
+            "content_manager_id": "ARTESIA.CONTENT.FILESYSTEM",
+            "content_path": "data\\repository\\original\\vol0\\0\\Screenshot 2024-02-12 075543_a140986f244405a110b95c135f07a188eb720236.png",
+            "content_size": 97556,
+            "height": 1004,
+            "id": "a140986f244405a110b95c135f07a188eb720236",
+            "mime_type": "image/png",
+            "name": "Screenshot 2024-02-12 075543.png",
+            "unit_of_size": "BYTES",
+            "url": "/otmmapi/v6/renditions/a140986f244405a110b95c135f07a188eb720236",
+            "width": 1070
+          }
+        },
+        "asset_id": "a98de78692c99cccd15caaf9aaaf01e179fb1a37",
+        "asset_lock_state_last_update_date": "2024-10-22T10:43:48.56+03:00",
+        "asset_lock_state_user_id": "1064",
+        "asset_state": "NORMAL",
+        "asset_state_last_update_date": "2024-10-22T10:43:08.59+03:00",
+        "asset_state_user_id": "1064",
+        "checked_out": false,
+        "content_editable": true,
+        "content_lock_state_last_update_date": "2024-10-22T10:42:50.277+03:00",
+        "content_lock_state_user_id": "1064",
+        "content_lock_state_user_name": "rlekkala",
+        "content_size": 97556,
+        "content_state": "NORMAL",
+        "content_state_last_update_date": "2024-10-22T10:42:50.243+03:00",
+        "content_state_user_id": "1064",
+        "content_state_user_name": "Ramesh BabuLekkala",
+        "content_type": "BITMAP",
+        "creator_id": "1064",
+        "date_imported": "2024-10-22T10:42:46.667+03:00",
+        "date_last_updated": "2024-10-22T10:43:08.59+03:00",
+        "deleted": false,
+        "delivery_service_url": "http://otmmqacr1:38080/adaptivemedia/rendition?id=a98de78692c99cccd15caaf9aaaf01e179fb1a37",
+        "expired": false,
+        "import_job_id": 646,
+        "import_user_name": "rlekkala",
+        "latest_version": true,
+        "legacy_model_id": 10012,
+        "locked": false,
+        "master_content_info": {
+          "content_checksum": "ca89dac9e8dc92c9343950702dac9c45",
+          "content_data": {
+            "data_source": "NO_CONTENT",
+            "temp_file": false
+          },
+          "content_kind": "MASTER",
+          "content_manager_id": "ARTESIA.CONTENT.FILESYSTEM",
+          "content_path": "data\\repository\\original\\vol0\\0\\Screenshot 2024-02-12 075543_a140986f244405a110b95c135f07a188eb720236.png",
+          "content_size": 97556,
+          "height": 1004,
+          "id": "a140986f244405a110b95c135f07a188eb720236",
+          "mime_type": "image/png",
+          "name": "Screenshot 2024-02-12 075543.png",
+          "unit_of_size": "BYTES",
+          "url": "/otmmapi/v6/renditions/a140986f244405a110b95c135f07a188eb720236",
+          "width": 1070
+        },
+        "metadata_lock_state_user_name": "rlekkala",
+        "metadata_model_id": "QMA.MODEL.COLLECTIONS.IMAGE",
+        "metadata_state_user_name": "Ramesh BabuLekkala",
+        "mime_type": "image/png",
+        "name": "Screenshot 2024-02-12 075543.png",
+        "original_asset_id": "a98de78692c99cccd15caaf9aaaf01e179fb1a37",
+        "rendition_content": {
+          "thumbnail_content": {
+            "content_data": {
+              "data_source": "NO_CONTENT",
+              "temp_file": false
+            },
+            "content_kind": "THUMBNAIL",
+            "content_manager_id": "ARTESIA.CONTENT.FILESYSTEM",
+            "content_path": "data\\repository\\thumb\\vol0\\0\\Screenshot 2024-02-12 075543-T_77743a652bfe7bea319823ba27b107aa44242602.png",
+            "content_size": 21002,
+            "height": 375,
+            "id": "77743a652bfe7bea319823ba27b107aa44242602",
+            "mime_type": "image/png",
+            "name": "Screenshot 2024-02-12 075543-T.png",
+            "unit_of_size": "BYTES",
+            "url": "/otmmapi/v6/renditions/77743a652bfe7bea319823ba27b107aa44242602",
+            "width": 400
+          },
+          "preview_content": {
+            "content_data": {
+              "data_source": "NO_CONTENT",
+              "temp_file": false
+            },
+            "content_kind": "PREVIEW",
+            "content_manager_id": "ARTESIA.CONTENT.FILESYSTEM",
+            "content_path": "data\\repository\\screen\\vol0\\0\\Screenshot 2024-02-12 075543-S_5fceb2546d7e9a2b185d45234b8422d2e268143b.png",
+            "content_size": 69732,
+            "height": 768,
+            "id": "5fceb2546d7e9a2b185d45234b8422d2e268143b",
+            "mime_type": "image/png",
+            "name": "Screenshot 2024-02-12 075543-S.png",
+            "unit_of_size": "BYTES",
+            "url": "/otmmapi/v6/renditions/5fceb2546d7e9a2b185d45234b8422d2e268143b",
+            "width": 818
+          }
+        },
+        "subscribed_to": false,
+        "thumbnail_content_id": "77743a652bfe7bea319823ba27b107aa44242602",
+        "version": 1
+      },
+      {
+        "access_control_descriptor": {
+          "permissions_map": {
+            "entry": [
+              {
+                "key": "text.securityPolicy.permission.Custom04Permission",
+                "value": false
+              },
+              {
+                "key": "text.securityPolicy.permission.ContentEditPermission",
+                "value": true
+              },
+              {
+                "key": "text.securityPolicy.permission.AssetViewPermission",
+                "value": true
+              },
+              {
+                "key": "text.securityPolicy.permission.ProjectViewPermission",
+                "value": false
+              },
+              {
+                "key": "text.securityPolicy.permission.MembershipEditPermission",
+                "value": true
+              },
+              {
+                "key": "text.securityPolicy.permission.Custom03Permission",
+                "value": false
+              },
+              {
+                "key": "text.securityPolicy.permission.MetaDataEditPermission",
+                "value": true
+              },
+              {
+                "key": "text.securityPolicy.permission.EditParentsPermission",
+                "value": true
+              },
+              {
+                "key": "text.securityPolicy.permission.Custom02Permission",
+                "value": false
+              },
+              {
+                "key": "text.securityPolicy.permission.ExportPermission",
+                "value": true
+              },
+              {
+                "key": "text.securityPolicy.permission.SummaryViewPermission",
+                "value": true
+              },
+              {
+                "key": "text.securityPolicy.permission.PreviewViewPermission",
+                "value": true
+              },
+              {
+                "key": "text.securityPolicy.permission.SubscribePermission",
+                "value": true
+              },
+              {
+                "key": "text.securityPolicy.permission.DeleteAssetPermission",
+                "value": true
+              },
+              {
+                "key": "text.securityPolicy.permission.Custom01Permission",
+                "value": false
+              }
+            ]
+          }
+        },
+        "asset_content_info": {
+          "master_content": {
+            "content_checksum": "a5f5fc2b2a319717a55cd823441669ee",
+            "content_data": {
+              "data_source": "NO_CONTENT",
+              "temp_file": false
+            },
+            "content_kind": "MASTER",
+            "content_manager_id": "ARTESIA.CONTENT.FILESYSTEM",
+            "content_path": "data\\repository\\original\\vol0\\0\\Screenshot 2024-02-14 232558_5f5d4849b4322e86a303c53f1972b5382720a6d6.png",
+            "content_size": 69926,
+            "height": 800,
+            "id": "5f5d4849b4322e86a303c53f1972b5382720a6d6",
+            "mime_type": "image/png",
+            "name": "Screenshot 2024-02-14 232558.png",
+            "unit_of_size": "BYTES",
+            "url": "/otmmapi/v6/renditions/5f5d4849b4322e86a303c53f1972b5382720a6d6",
+            "width": 782
+          }
+        },
+        "asset_id": "c5d7237a6acf2514cd7f2af8c1cc3c197823b31b",
+        "asset_lock_state_last_update_date": "2024-10-22T10:43:48.56+03:00",
+        "asset_lock_state_user_id": "1064",
+        "asset_state": "NORMAL",
+        "asset_state_last_update_date": "2024-10-22T10:43:14.513+03:00",
+        "asset_state_user_id": "1064",
+        "checked_out": false,
+        "content_editable": true,
+        "content_lock_state_last_update_date": "2024-10-22T10:42:50.277+03:00",
+        "content_lock_state_user_id": "1064",
+        "content_lock_state_user_name": "rlekkala",
+        "content_size": 69926,
+        "content_state": "NORMAL",
+        "content_state_last_update_date": "2024-10-22T10:42:48.313+03:00",
+        "content_state_user_id": "1064",
+        "content_state_user_name": "Ramesh BabuLekkala",
+        "content_type": "BITMAP",
+        "creator_id": "1064",
+        "date_imported": "2024-10-22T10:42:46.577+03:00",
+        "date_last_updated": "2024-10-22T10:43:14.513+03:00",
+        "deleted": false,
+        "delivery_service_url": "http://otmmqacr1:38080/adaptivemedia/rendition?id=c5d7237a6acf2514cd7f2af8c1cc3c197823b31b",
+        "expired": false,
+        "import_job_id": 646,
+        "import_user_name": "rlekkala",
+        "latest_version": true,
+        "legacy_model_id": 10012,
+        "locked": false,
+        "master_content_info": {
+          "content_checksum": "a5f5fc2b2a319717a55cd823441669ee",
+          "content_data": {
+            "data_source": "NO_CONTENT",
+            "temp_file": false
+          },
+          "content_kind": "MASTER",
+          "content_manager_id": "ARTESIA.CONTENT.FILESYSTEM",
+          "content_path": "data\\repository\\original\\vol0\\0\\Screenshot 2024-02-14 232558_5f5d4849b4322e86a303c53f1972b5382720a6d6.png",
+          "content_size": 69926,
+          "height": 800,
+          "id": "5f5d4849b4322e86a303c53f1972b5382720a6d6",
+          "mime_type": "image/png",
+          "name": "Screenshot 2024-02-14 232558.png",
+          "unit_of_size": "BYTES",
+          "url": "/otmmapi/v6/renditions/5f5d4849b4322e86a303c53f1972b5382720a6d6",
+          "width": 782
+        },
+        "metadata_lock_state_user_name": "rlekkala",
+        "metadata_model_id": "QMA.MODEL.COLLECTIONS.IMAGE",
+        "metadata_state_user_name": "Ramesh BabuLekkala",
+        "mime_type": "image/png",
+        "name": "Screenshot 2024-02-14 232558.png",
+        "original_asset_id": "c5d7237a6acf2514cd7f2af8c1cc3c197823b31b",
+        "rendition_content": {
+          "thumbnail_content": {
+            "content_data": {
+              "data_source": "NO_CONTENT",
+              "temp_file": false
+            },
+            "content_kind": "THUMBNAIL",
+            "content_manager_id": "ARTESIA.CONTENT.FILESYSTEM",
+            "content_path": "data\\repository\\thumb\\vol0\\0\\Screenshot 2024-02-14 232558-T_c2ce2f614e751ac65882e47bd60624762679c371.png",
+            "content_size": 21925,
+            "height": 375,
+            "id": "c2ce2f614e751ac65882e47bd60624762679c371",
+            "mime_type": "image/png",
+            "name": "Screenshot 2024-02-14 232558-T.png",
+            "unit_of_size": "BYTES",
+            "url": "/otmmapi/v6/renditions/c2ce2f614e751ac65882e47bd60624762679c371",
+            "width": 367
+          },
+          "preview_content": {
+            "content_data": {
+              "data_source": "NO_CONTENT",
+              "temp_file": false
+            },
+            "content_kind": "PREVIEW",
+            "content_manager_id": "ARTESIA.CONTENT.FILESYSTEM",
+            "content_path": "data\\repository\\screen\\vol0\\0\\Screenshot 2024-02-14 232558-S_dca9b77c8aea148df61f8bcb6ee50d04db188593.png",
+            "content_size": 69646,
+            "height": 768,
+            "id": "dca9b77c8aea148df61f8bcb6ee50d04db188593",
+            "mime_type": "image/png",
+            "name": "Screenshot 2024-02-14 232558-S.png",
+            "unit_of_size": "BYTES",
+            "url": "/otmmapi/v6/renditions/dca9b77c8aea148df61f8bcb6ee50d04db188593",
+            "width": 751
+          }
+        },
+        "subscribed_to": false,
+        "thumbnail_content_id": "c2ce2f614e751ac65882e47bd60624762679c371",
+        "version": 1
+      },
+      {
+        "access_control_descriptor": {
+          "permissions_map": {
+            "entry": [
+              {
+                "key": "text.securityPolicy.permission.Custom04Permission",
+                "value": false
+              },
+              {
+                "key": "text.securityPolicy.permission.ContentEditPermission",
+                "value": true
+              },
+              {
+                "key": "text.securityPolicy.permission.AssetViewPermission",
+                "value": true
+              },
+              {
+                "key": "text.securityPolicy.permission.ProjectViewPermission",
+                "value": false
+              },
+              {
+                "key": "text.securityPolicy.permission.MembershipEditPermission",
+                "value": true
+              },
+              {
+                "key": "text.securityPolicy.permission.Custom03Permission",
+                "value": false
+              },
+              {
+                "key": "text.securityPolicy.permission.MetaDataEditPermission",
+                "value": true
+              },
+              {
+                "key": "text.securityPolicy.permission.EditParentsPermission",
+                "value": true
+              },
+              {
+                "key": "text.securityPolicy.permission.Custom02Permission",
+                "value": false
+              },
+              {
+                "key": "text.securityPolicy.permission.ExportPermission",
+                "value": true
+              },
+              {
+                "key": "text.securityPolicy.permission.SummaryViewPermission",
+                "value": true
+              },
+              {
+                "key": "text.securityPolicy.permission.PreviewViewPermission",
+                "value": true
+              },
+              {
+                "key": "text.securityPolicy.permission.SubscribePermission",
+                "value": true
+              },
+              {
+                "key": "text.securityPolicy.permission.DeleteAssetPermission",
+                "value": true
+              },
+              {
+                "key": "text.securityPolicy.permission.Custom01Permission",
+                "value": false
+              }
+            ]
+          }
+        },
+        "asset_content_info": {
+          "master_content": {
+            "content_checksum": "dae4d8cf6a9bb4fa3f5d5d22b272a343",
+            "content_data": {
+              "data_source": "NO_CONTENT",
+              "temp_file": false
+            },
+            "content_kind": "MASTER",
+            "content_manager_id": "ARTESIA.CONTENT.FILESYSTEM",
+            "content_path": "data\\repository\\original\\vol0\\0\\Screenshot 2024-02-13 200055_327d3bd4f1051a7be3d9f9752eab48599ac98d89.png",
+            "content_size": 65422,
+            "height": 775,
+            "id": "327d3bd4f1051a7be3d9f9752eab48599ac98d89",
+            "mime_type": "image/png",
+            "name": "Screenshot 2024-02-13 200055.png",
+            "unit_of_size": "BYTES",
+            "url": "/otmmapi/v6/renditions/327d3bd4f1051a7be3d9f9752eab48599ac98d89",
+            "width": 760
+          }
+        },
+        "asset_id": "ef6ab4a4c485ec04dde69dcad84500459ab3f678",
+        "asset_lock_state_last_update_date": "2024-10-22T10:43:48.56+03:00",
+        "asset_lock_state_user_id": "1064",
+        "asset_state": "NORMAL",
+        "asset_state_last_update_date": "2024-10-22T10:43:02.59+03:00",
+        "asset_state_user_id": "1064",
+        "checked_out": false,
+        "content_editable": true,
+        "content_lock_state_last_update_date": "2024-10-22T10:42:50.277+03:00",
+        "content_lock_state_user_id": "1064",
+        "content_lock_state_user_name": "rlekkala",
+        "content_size": 65422,
+        "content_state": "NORMAL",
+        "content_state_last_update_date": "2024-10-22T10:42:49.08+03:00",
+        "content_state_user_id": "1064",
+        "content_state_user_name": "Ramesh BabuLekkala",
+        "content_type": "BITMAP",
+        "creator_id": "1064",
+        "date_imported": "2024-10-22T10:42:46.607+03:00",
+        "date_last_updated": "2024-10-22T10:43:02.59+03:00",
+        "deleted": false,
+        "delivery_service_url": "http://otmmqacr1:38080/adaptivemedia/rendition?id=ef6ab4a4c485ec04dde69dcad84500459ab3f678",
+        "expired": false,
+        "import_job_id": 646,
+        "import_user_name": "rlekkala",
+        "latest_version": true,
+        "legacy_model_id": 10012,
+        "locked": false,
+        "master_content_info": {
+          "content_checksum": "dae4d8cf6a9bb4fa3f5d5d22b272a343",
+          "content_data": {
+            "data_source": "NO_CONTENT",
+            "temp_file": false
+          },
+          "content_kind": "MASTER",
+          "content_manager_id": "ARTESIA.CONTENT.FILESYSTEM",
+          "content_path": "data\\repository\\original\\vol0\\0\\Screenshot 2024-02-13 200055_327d3bd4f1051a7be3d9f9752eab48599ac98d89.png",
+          "content_size": 65422,
+          "height": 775,
+          "id": "327d3bd4f1051a7be3d9f9752eab48599ac98d89",
+          "mime_type": "image/png",
+          "name": "Screenshot 2024-02-13 200055.png",
+          "unit_of_size": "BYTES",
+          "url": "/otmmapi/v6/renditions/327d3bd4f1051a7be3d9f9752eab48599ac98d89",
+          "width": 760
+        },
+        "metadata_lock_state_user_name": "rlekkala",
+        "metadata_model_id": "QMA.MODEL.COLLECTIONS.IMAGE",
+        "metadata_state_user_name": "Ramesh BabuLekkala",
+        "mime_type": "image/png",
+        "name": "Screenshot 2024-02-13 200055.png",
+        "original_asset_id": "ef6ab4a4c485ec04dde69dcad84500459ab3f678",
+        "rendition_content": {
+          "thumbnail_content": {
+            "content_data": {
+              "data_source": "NO_CONTENT",
+              "temp_file": false
+            },
+            "content_kind": "THUMBNAIL",
+            "content_manager_id": "ARTESIA.CONTENT.FILESYSTEM",
+            "content_path": "data\\repository\\thumb\\vol0\\0\\Screenshot 2024-02-13 200055-T_357c3372cd0d1aba2855fcc464a7929e9feedf88.png",
+            "content_size": 21117,
+            "height": 375,
+            "id": "357c3372cd0d1aba2855fcc464a7929e9feedf88",
+            "mime_type": "image/png",
+            "name": "Screenshot 2024-02-13 200055-T.png",
+            "unit_of_size": "BYTES",
+            "url": "/otmmapi/v6/renditions/357c3372cd0d1aba2855fcc464a7929e9feedf88",
+            "width": 368
+          },
+          "preview_content": {
+            "content_data": {
+              "data_source": "NO_CONTENT",
+              "temp_file": false
+            },
+            "content_kind": "PREVIEW",
+            "content_manager_id": "ARTESIA.CONTENT.FILESYSTEM",
+            "content_path": "data\\repository\\screen\\vol0\\0\\Screenshot 2024-02-13 200055-S_c90c13d38981677ea344ebeeab305a8bc0d0f498.png",
+            "content_size": 66901,
+            "height": 768,
+            "id": "c90c13d38981677ea344ebeeab305a8bc0d0f498",
+            "mime_type": "image/png",
+            "name": "Screenshot 2024-02-13 200055-S.png",
+            "unit_of_size": "BYTES",
+            "url": "/otmmapi/v6/renditions/c90c13d38981677ea344ebeeab305a8bc0d0f498",
+            "width": 753
+          }
+        },
+        "subscribed_to": false,
+        "thumbnail_content_id": "357c3372cd0d1aba2855fcc464a7929e9feedf88",
+        "version": 1
+      }
+    ]
+  }
+}

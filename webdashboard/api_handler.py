@@ -7,7 +7,6 @@ PWD  = os.getenv("OTMM_PASS")
 
 def fetch_data():
     with requests.Session() as s:
-        
         # logging in 
         login = s.post(
             f"{API}/sessions",
@@ -56,4 +55,18 @@ def fetch_data():
             timeout=30
         )
         r.raise_for_status()          # no 400 now
-        print(json.dumps(r.json(), indent=2))
+        return r.json()
+    
+def calculate_asset_count(assets):
+    """
+    Calculate the total number of assets from the fetched data.
+    """
+    total_count = assets["search_result_resource"]["search_result"]["total_hit_count"]
+    assets = assets["search_result_resource"]["search_result"]["assetL_list"]
+    
+    month_template = {"videos": 0, "images": 0, "audio": 0, "documents": 0}
+    data = {
+        "all_data": {month:month_template for month in ["January", "February", "March", "April", "May", "June", 
+                                            "July", "August", "September", "October", "November", "December"]}
+    }
+
