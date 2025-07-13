@@ -127,8 +127,3 @@ def calculate_asset_count(assets):
     return {"all_data": buckets}
 
 
-with open ("webdashboard/new_assets.json", "r") as f:
-    assets = json.load(f)
-    a = calculate_asset_count(assets)
-    print(a)
-
