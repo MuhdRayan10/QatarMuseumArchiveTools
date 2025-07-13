@@ -1,5 +1,5 @@
 import os, json, urllib.parse, requests
-import datetime, pprint
+from datetime import datetime
 
 API  = "https://otmm-qa1.qm.org.qa/otmmapi/v6"
 USER = os.getenv("OTMM_USER")
@@ -84,12 +84,11 @@ def calculate_asset_count(assets):
     assets = assets["search_result_resource"]["asset_list"]
     for asset in assets:
         # extract date
-        date_str = asset.get("date_imported") or asset.get("date_last_updated")
+        date_str = asset.get("date_imported")
         if not date_str:
             continue                      # skip if no date
 
-        ts = date_str.split("+")[0].split("-")[0] if "+" in date_str else date_str
-        dt = datetime.fromisoformat(ts)
+        dt = datetime.fromisoformat(date_str.replace("Z", "+00:00"))
         month = dt.strftime("%B")           # get month name
         d = dt.day
         week = (
@@ -125,11 +124,11 @@ def calculate_asset_count(assets):
             for cls in classes:
                 week_bucket.setdefault(cls, 0)
 
-    return {"all_data": buckets})
+    return {"all_data": buckets}
 
 
 with open ("webdashboard/new_assets.json", "r") as f:
     assets = json.load(f)
     a = calculate_asset_count(assets)
-    pprint.pprint(a)
+    print(a)
 
