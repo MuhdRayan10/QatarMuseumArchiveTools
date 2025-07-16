@@ -61,6 +61,38 @@ else {
     Remove-Item $redMsi
 }
 
+# ---------- Make sure libmmd.dll is available ----------
+$libNeeded   = Join-Path $redProgramDir 'libmmd.dll'
+
+if (-not (Test-Path $libNeeded)) {
+    # 1) try to copy an existing Intel DLL 
+    $dllSource = Get-ChildItem 'C:\Program Files*\Intel*' -Recurse -Filter libmmd.dll `
+                   -ErrorAction SilentlyContinue | Select-Object -First 1
+
+    if ($dllSource) {
+        Copy-Item $dllSource.FullName $libNeeded -Force
+        Write-Host "Copied libmmd.dll from $($dllSource.DirectoryName)"
+    }
+    else {
+        # 2) fall back to downloading Intel’s runtime
+        Write-Warning "libmmd.dll still missing—installing Intel compiler runtime..."
+
+        $intelUrl  = 'https://registrationcenter-download.intel.com/akdlm/IRC_NAS/7f810440-2a66-4d34-b05f-8f4395667844/w_dpcpp_cpp_runtime_p_2025.1.1.1001.exe'
+        $intelExe  = "$env:TEMP\intel_cpp_runtime.exe"
+
+        Invoke-WebRequest $intelUrl -OutFile $intelExe
+        Start-Process $intelExe -ArgumentList '--silent' -Wait
+        Remove-Item $intelExe
+
+        if (-not (Test-Path $libNeeded)) {
+            Write-Warning "Intel runtime installed but libmmd.dll still not found—check manually."
+        } else {
+            Write-Host "Intel runtime installed; libmmd.dll resolved."
+        }
+    }
+}
+
+
 # Add REDline (CLI) folder to PATH if needed
 if (Test-Path "$redProgramDir\REDline.exe") {
     $machinePath = [Environment]::GetEnvironmentVariable('Path','Machine')
