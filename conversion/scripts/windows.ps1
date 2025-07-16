@@ -49,4 +49,32 @@ if (-not ($machinePath -split ';' | Where-Object { $_ -ieq $ffmpegResolvedBin })
     Write-Host "✓ FFmpeg already on PATH"
 }
 
+# ========== REDCINE-X PRO ==========
+Write-Host "`n◼ Downloading REDCINE-X PRO …"
+Invoke-WebRequest $redcineUrl -OutFile $redZip
+
+Write-Host "◼ Extracting installer …"
+Expand-Archive $redZip -DestinationPath $redExtract -Force
+Remove-Item $redZip
+
+$msi = Get-ChildItem "$redExtract\*.msi" | Select-Object -First 1
+if (-not $msi) { throw "Could not locate the MSI inside $redExtract" }
+
+Write-Host "◼ Installing REDCINE-X PRO (silent)…"
+Start-Process "msiexec.exe" -ArgumentList "/i `"$($msi.FullName)`" /qn /norestart" -Wait
+Remove-Item $redExtract -Recurse -Force
+
+# Add REDline (CLI) folder to PATH if needed
+if (Test-Path "$redProgramDir\REDline.exe") {
+    $machinePath = [Environment]::GetEnvironmentVariable('Path','Machine')
+    if (-not ($machinePath -split ';' | Where-Object { $_ -ieq $redProgramDir })) {
+        [Environment]::SetEnvironmentVariable('Path', "$machinePath;$redProgramDir", 'Machine')
+        Write-Host "✓ Added Redline to PATH"
+    } else {
+        Write-Host "✓ Redline already on PATH"
+    }
+} else {
+    Write-Warning "REDline.exe not found in $redProgramDir — adjust if you installed RCX elsewhere."
+}
+
 Write-Host "`nAll done!  Open a *new* command prompt or PowerShell session for the updated PATH to take effect."
