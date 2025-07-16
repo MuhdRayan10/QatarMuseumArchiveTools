@@ -75,7 +75,7 @@ if (-not (Test-Path $libNeeded)) {
     }
     else {
         # 2) fall back to downloading Intel’s runtime
-        Write-Warning "libmmd.dll still missing—installing Intel compiler runtime..."
+        Write-Warning "libmmd.dll still missing - installing Intel compiler runtime"
 
         $intelUrl  = 'https://registrationcenter-download.intel.com/akdlm/IRC_NAS/7f810440-2a66-4d34-b05f-8f4395667844/w_dpcpp_cpp_runtime_p_2025.1.1.1001.exe'
         $intelExe  = "$env:TEMP\intel_cpp_runtime.exe"
@@ -85,7 +85,7 @@ if (-not (Test-Path $libNeeded)) {
         Remove-Item $intelExe
 
         if (-not (Test-Path $libNeeded)) {
-            Write-Warning "Intel runtime installed but libmmd.dll still not found—check manually."
+            Write-Warning "Intel runtime installed but libmmd.dll still not found - check manually."
         } else {
             Write-Host "Intel runtime installed; libmmd.dll resolved."
         }
@@ -103,7 +103,7 @@ if (Test-Path "$redProgramDir\REDline.exe") {
         Write-Host "Redline already on PATH"
     }
 } else {
-    Write-Warning "REDline.exe not found in $redProgramDir — adjust if you installed RCX elsewhere."
+    Write-Warning "REDline.exe not found in $redProgramDir -cd  adjust if you installed RCX elsewhere."
 }
 
 Write-Host "`nAll done!  Open a *new* terminal (or reboot) so the updated PATH takes effect."
