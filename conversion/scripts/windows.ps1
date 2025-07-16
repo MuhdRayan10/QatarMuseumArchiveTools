@@ -1,8 +1,7 @@
-<#  FFmpeg + REDCINE-X PRO bootstrapper
-    Tested on Windows 10/11 PowerShell 5/7
+<#  FFmpeg + REDCINE-X PRO bootstrapper (idempotent for FFmpeg)
+    Run from an *elevated* PowerShell window.
 #>
 
-# ---------------- safety & config -----------------
 $ErrorActionPreference = 'Stop'
 if (-not ( [Security.Principal.WindowsPrincipal] `
         [Security.Principal.WindowsIdentity]::GetCurrent()
@@ -11,29 +10,39 @@ if (-not ( [Security.Principal.WindowsPrincipal] `
     exit 1
 }
 
-# Use TLS 1.2/1.3 for all web requests
-[Net.ServicePointManager]::SecurityProtocol = 3072
+[Net.ServicePointManager]::SecurityProtocol = 3072  # TLS 1.2+
 
+# -------- CONFIG --------
 $ffmpegUrl      = 'https://www.gyan.dev/ffmpeg/builds/ffmpeg-release-essentials.zip'
 $ffmpegZip      = "$env:TEMP\ffmpeg.zip"
-$ffmpegRoot     = 'C:\Tools\ffmpeg'        # adjust if you like
-$ffmpegBinPath  = "$ffmpegRoot\ffmpeg-*\bin"  # wildcard matches version folder
+$ffmpegRoot     = 'C:\Tools\ffmpeg'        # change if desired
+$ffmpegBinGlob  = "$ffmpegRoot\ffmpeg-*\bin\ffmpeg.exe"   # wildcard for version folder
 
-# --------------- FFmpeg --------------------------
-Write-Host "`n◼ Downloading FFmpeg …"
-Invoke-WebRequest $ffmpegUrl -OutFile $ffmpegZip
+$redcineUrl     = 'https://downloads.red.com/rcx/release/64.0.25/REDCINE-X_PRO_Windows_64.0.25.zip'
+$redZip         = "$env:TEMP\rcx.zip"
+$redExtract     = "$env:TEMP\rcx"
+$redProgramDir  = 'C:\Program Files\REDCINE-X PRO 64-bit' # default install location
+# ------------------------
 
-Write-Host "◼ Extracting to $ffmpegRoot"
-New-Item $ffmpegRoot -ItemType Directory -Force | Out-Null
-Expand-Archive -Path $ffmpegZip -DestinationPath $ffmpegRoot -Force
-Remove-Item $ffmpegZip
+# ========== FFmpeg ==========
+if (Test-Path $ffmpegBinGlob) {
+    Write-Host "✓ FFmpeg already present — skipping download/extract."
+    $ffmpegResolvedBin = (Get-Item $ffmpegBinGlob | Select-Object -First 1).DirectoryName
+} else {
+    Write-Host "`n◼ Downloading FFmpeg …"
+    Invoke-WebRequest $ffmpegUrl -OutFile $ffmpegZip
 
-# Grab actual bin folder after wild-card expansion
-$ffmpegResolvedBin = Get-Item $ffmpegBinPath | Select-Object -First 1 | ForEach-Object FullName
+    Write-Host "◼ Extracting to $ffmpegRoot"
+    New-Item $ffmpegRoot -ItemType Directory -Force | Out-Null
+    Expand-Archive -Path $ffmpegZip -DestinationPath $ffmpegRoot -Force
+    Remove-Item $ffmpegZip
 
-# Add FFmpeg to PATH (machine scope)
+    $ffmpegResolvedBin = (Get-Item $ffmpegBinGlob | Select-Object -First 1).DirectoryName
+}
+
+# Add FFmpeg bin to machine PATH if needed
 $machinePath = [Environment]::GetEnvironmentVariable('Path','Machine')
-if (-not $machinePath.Split(';') -contains $ffmpegResolvedBin) {
+if (-not ($machinePath -split ';' | Where-Object { $_ -ieq $ffmpegResolvedBin })) {
     [Environment]::SetEnvironmentVariable('Path', "$machinePath;$ffmpegResolvedBin", 'Machine')
     Write-Host "✓ Added FFmpeg to PATH"
 } else {
