@@ -18,7 +18,7 @@ $ffmpegZip      = "$env:TEMP\ffmpeg.zip"
 $ffmpegRoot     = 'C:\Tools\ffmpeg'        # change if desired
 $ffmpegBinGlob  = "$ffmpegRoot\ffmpeg-*\bin\ffmpeg.exe"   # wildcard for version folder
 
-$redcineUrl     = 'https://downloads.red.com/rcx/release/64.0.25/REDCINE-X_PRO_Windows_64.0.25.zip'
+$redcineUrl     = 'https://downloads.red.com/software/rcx/win/release/64.0.25/REDCINE-X_PRO_Build_64.0.25.msi'
 $redZip         = "$env:TEMP\rcx.zip"
 $redExtract     = "$env:TEMP\rcx"
 $redProgramDir  = 'C:\Program Files\REDCINE-X PRO 64-bit' # default install location
@@ -77,4 +77,4 @@ if (Test-Path "$redProgramDir\REDline.exe") {
     Write-Warning "REDline.exe not found in $redProgramDir — adjust if you installed RCX elsewhere."
 }
 
-Write-Host "`nAll done!  Open a *new* command prompt or PowerShell session for the updated PATH to take effect."
+Write-Host "`nAll done!  Open a *new* terminal (or reboot) so the updated PATH takes effect."
