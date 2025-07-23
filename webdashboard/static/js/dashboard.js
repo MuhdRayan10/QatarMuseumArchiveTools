@@ -108,7 +108,7 @@ function renderStats() {
       week_data.images,
       week_data.videos,
       week_data.audio,
-      week_data.documents
+      week_data.documents  
     ];
   }
   document.getElementById("totalAssets").innerText = sum;

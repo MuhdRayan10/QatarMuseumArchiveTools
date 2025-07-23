@@ -27,8 +27,8 @@ def add_asset(user, month, week, data_type):
         cursor.execute("INSERT INTO asset_data values(?,?,?,?,?,?,?)", (user, month, week, 0, 0, 0, 0))
         db.commit()
 
-    cursor.execute(f"UPDATE asset_data SET {data_type}={data_type}+1 WHERE user={user}")
+    cursor.execute(f"UPDATE asset_data SET {data_type}={data_type}+1 WHERE user= ?", (user,))
     db.commit()    
     
-
-    
+create_db()
+add_asset('test_user', '10', 1, 'images') #increasing images count for test user
