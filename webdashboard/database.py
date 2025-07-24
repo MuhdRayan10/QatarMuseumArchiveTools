@@ -1,34 +1,37 @@
+from datetime import datetime
 import sqlite3
+import os
 
+DB_PATH = os.path.join(os.path.dirname(__file__), "data.db")
 
 def create_db():
-    db = sqlite3.connect("./webdashboard/data.db")
+    db = sqlite3.connect(DB_PATH)
     cursor = db.cursor()
 
-    cursor.execute("""CREATE TABLE IF NOT EXISTS asset_data(
-                         user TEXT PRIMARY KEY,
+    cursor.execute("""CREATE TABLE IF NOT EXISTS assets(
+                         asset_id TEXT PRIMARY KEY,
+                         user TEXT,   
                          month TEXT,
                          week INTEGER,
-                         images INTEGER,
-                         videos INTEGER,
-                         audio INTEGER,
-                         documents INTEGER)""")
+                         type TEXT)""")
     db.commit()
     db.close()
 
-def add_asset(user, month, week, data_type):
-    db = sqlite3.connect("./webdashboard/data.db")
+def add_asset(asset_id, user, month, week, data_type):
+    db = sqlite3.connect(DB_PATH)
     cursor = db.cursor()
 
-    cursor.execute("SELECT DISTINCT user FROM asset_data")
-    users = [u[0] for u in cursor.fetchall()]
-
-    if user not in users:
-        cursor.execute("INSERT INTO asset_data values(?,?,?,?,?,?,?)", (user, month, week, 0, 0, 0, 0))
-        db.commit()
-
-    cursor.execute(f"UPDATE asset_data SET {data_type}={data_type}+1 WHERE user= ?", (user,))
+    cursor.execute("INSERT IGNORE INTO assets (?,?,?,?,?)", (asset_id, user, month, week, data_type))
     db.commit()    
     
-create_db()
-add_asset('test_user', '10', 1, 'images') #increasing images count for test user
+if __name__ == "__main__":
+    create_db()
+    add_asset("12345", "user1", "January", 1, "images")
+
+    db = sqlite3.connect(DB_PATH)
+    cursor = db.cursor()
+
+    cursor.execute("SELECT * FROM assets")
+    rows = cursor.fetchall()
+    for row in rows:
+        print(row)
