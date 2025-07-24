@@ -36,10 +36,10 @@ def add_asset(asset_id, user, month, week, data_type):
         print(f"Asset with ID {asset_id} already exists.")
 
 def get_users():
-    """Return a list of unique users from the database."""
+    """Return a sorted list of unique users from the database."""
     with sqlite3.connect(DB_PATH) as db:
         cursor = db.cursor()
-        cursor.execute("SELECT DISTINCT user FROM assets")
+        cursor.execute("SELECT DISTINCT user FROM assets ORDER BY user")
         return [row[0] for row in cursor.fetchall()]
 
 def get_asset_id_list():
@@ -73,9 +73,13 @@ def get_counts(user=None):
     result = {}
     for row in rows:
         month = row["month"]
-        week = row["week"]
+        week_val = row["week"]
+        if isinstance(week_val, int):
+            week = f"Week {week_val}"
+        else:
+            week = week_val if str(week_val).startswith("Week") else f"Week {week_val}"
         bucket = result.setdefault(month, {}).setdefault(
-            f"Week {week}", {"images": 0, "videos": 0, "audio": 0, "documents": 0}
+            week, {"images": 0, "videos": 0, "audio": 0, "documents": 0}
         )
         bucket["images"] += row["images"]
         bucket["videos"] += row["videos"]
