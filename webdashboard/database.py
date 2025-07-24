@@ -35,6 +35,13 @@ def add_asset(asset_id, user, month, week, data_type):
     except sqlite3.IntegrityError:
         print(f"Asset with ID {asset_id} already exists.")
 
+def get_asset_id_list():
+    """Return a list of all asset IDs in the database."""
+    with sqlite3.connect(DB_PATH) as db:
+        cursor = db.cursor()
+        cursor.execute("SELECT asset_id FROM assets")
+        return [row[0] for row in cursor.fetchall()]
+
 def get_counts(user=None):
     """Return aggregated counts, optionally filtered by user."""
     query = (
@@ -84,6 +91,11 @@ if __name__ == "__main__":
             user = input("Enter user (or leave empty for all): ")
             counts = get_counts(user if user else None)
             print(counts)
+
+        elif cmd == "reset":
+            reset_db()
+            print("Database reset.")
+
         else:
             print("Unknown command")
         
