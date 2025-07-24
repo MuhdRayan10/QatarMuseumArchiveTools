@@ -35,6 +35,13 @@ def add_asset(asset_id, user, month, week, data_type):
     except sqlite3.IntegrityError:
         print(f"Asset with ID {asset_id} already exists.")
 
+def get_users():
+    """Return a list of unique users from the database."""
+    with sqlite3.connect(DB_PATH) as db:
+        cursor = db.cursor()
+        cursor.execute("SELECT DISTINCT user FROM assets")
+        return [row[0] for row in cursor.fetchall()]
+
 def get_asset_id_list():
     """Return a list of all asset IDs in the database."""
     with sqlite3.connect(DB_PATH) as db:

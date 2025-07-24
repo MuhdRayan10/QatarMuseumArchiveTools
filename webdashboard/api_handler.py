@@ -99,10 +99,10 @@ def update_data(assets):
         month = dt.strftime("%B")           # get month name
         d = dt.day
         week = (
-            "Week 1" if d <= 7 else         # get week number
-            "Week 2" if d <= 14 else
-            "Week 3" if d <= 21 else
-            "Week 4"
+            1 if d <= 7 else         # get week number
+            2 if d <= 14 else
+            3 if d <= 21 else
+            4
         )
 
         # get file type
