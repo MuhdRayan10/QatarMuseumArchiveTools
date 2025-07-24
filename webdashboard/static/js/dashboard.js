@@ -3,14 +3,41 @@
 let assets = {};
 let previewIndex = 0;
 
-// Fetch the flat list of assets
-fetch("/api/data")
-  .then(res => res.json())
-  .then(json => {
-    assets = json || {};
-    //initPreview();
-  })
-  .catch(err => console.error("Failed to load assets!!!:", err));
+function loadAssets(user = "") {
+  const url = user ? `/api/data?user=${encodeURIComponent(user)}` : "/api/data";
+  fetch(url)
+    .then(res => res.json())
+    .then(json => {
+      assets = json || {};
+      initStats();
+    })
+    .catch(err => console.error("Failed to load assets:", err));
+}
+
+function loadUsers() {
+  fetch("/api/users")
+    .then(res => res.json())
+    .then(list => {
+      const container = document.getElementById("statUserSelector");
+      if (!container) return;
+      container.innerHTML = `
+        <label for="statUser" class="form-label fw-semibold">User</label>
+        <select id="statUser" class="form-select">
+          <option value="">All</option>
+          ${list.map(u => `<option>${u}</option>`).join("")}
+        </select>`;
+      document
+        .getElementById("statUser")
+        .addEventListener("change", () => {
+          const u = document.getElementById("statUser").value;
+          loadAssets(u);
+        });
+    })
+    .catch(err => console.error("Failed to load users:", err));
+}
+
+loadUsers();
+loadAssets();
 
 /* ----------- PREVIEW TAB ------------ 
 TO DO

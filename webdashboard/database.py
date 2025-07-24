@@ -1,34 +1,113 @@
+from datetime import datetime
 import sqlite3
+import os
 
+DB_PATH = os.path.join(os.path.dirname(__file__), "data.db")
+
+def reset_db():
+    """Reset the database by deleting the existing file."""
+    if os.path.exists(DB_PATH):
+        os.remove(DB_PATH)
+    create_db()
 
 def create_db():
-    db = sqlite3.connect("./webdashboard/data.db")
+    db = sqlite3.connect(DB_PATH)
     cursor = db.cursor()
 
-    cursor.execute("""CREATE TABLE IF NOT EXISTS asset_data(
-                         user TEXT PRIMARY KEY,
+    cursor.execute("""CREATE TABLE IF NOT EXISTS assets(
+                         asset_id TEXT PRIMARY KEY,
+                         user TEXT,   
                          month TEXT,
                          week INTEGER,
-                         images INTEGER,
-                         videos INTEGER,
-                         audio INTEGER,
-                         documents INTEGER)""")
+                         type TEXT)""")
     db.commit()
     db.close()
 
-def add_asset(user, month, week, data_type):
-    db = sqlite3.connect("./webdashboard/data.db")
+def add_asset(asset_id, user, month, week, data_type):
+    db = sqlite3.connect(DB_PATH)
     cursor = db.cursor()
 
-    cursor.execute("SELECT DISTINCT user FROM asset_data")
-    users = [u[0] for u in cursor.fetchall()]
+    try:
+        cursor.execute("INSERT INTO assets values (?,?,?,?,?)", (asset_id, user, month, week, data_type))
+        db.commit()  
+        db.close()
 
-    if user not in users:
-        cursor.execute("INSERT INTO asset_data values(?,?,?,?,?,?,?)", (user, month, week, 0, 0, 0, 0))
-        db.commit()
+    except sqlite3.IntegrityError:
+        print(f"Asset with ID {asset_id} already exists.")
 
-    cursor.execute(f"UPDATE asset_data SET {data_type}={data_type}+1 WHERE user= ?", (user,))
-    db.commit()    
+def get_users():
+    """Return a sorted list of unique users from the database."""
+    with sqlite3.connect(DB_PATH) as db:
+        cursor = db.cursor()
+        cursor.execute("SELECT DISTINCT user FROM assets ORDER BY user")
+        return [row[0] for row in cursor.fetchall()]
+
+def get_asset_id_list():
+    """Return a list of all asset IDs in the database."""
+    with sqlite3.connect(DB_PATH) as db:
+        cursor = db.cursor()
+        cursor.execute("SELECT asset_id FROM assets")
+        return [row[0] for row in cursor.fetchall()]
+
+def get_counts(user=None):
+    """Return aggregated counts, optionally filtered by user."""
+    query = (
+        "SELECT month, week,"
+        " SUM(CASE WHEN type='images' THEN 1 ELSE 0 END) AS images,"
+        " SUM(CASE WHEN type='videos' THEN 1 ELSE 0 END) AS videos,"
+        " SUM(CASE WHEN type='audio' THEN 1 ELSE 0 END) AS audio,"
+        " SUM(CASE WHEN type='documents' THEN 1 ELSE 0 END) AS documents"
+        " FROM assets"
+    )
+    params = []
+    if user:
+        query += " WHERE user=?"
+        params.append(user)
+    query += " GROUP BY month, week"
+
+
+    with sqlite3.connect(DB_PATH) as conn:
+        conn.row_factory = sqlite3.Row
+        rows = conn.execute(query, params).fetchall()
+
+    result = {}
+    for row in rows:
+        month = row["month"]
+        week_val = row["week"]
+        if isinstance(week_val, int):
+            week = f"Week {week_val}"
+        else:
+            week = week_val if str(week_val).startswith("Week") else f"Week {week_val}"
+        bucket = result.setdefault(month, {}).setdefault(
+            week, {"images": 0, "videos": 0, "audio": 0, "documents": 0}
+        )
+        bucket["images"] += row["images"]
+        bucket["videos"] += row["videos"]
+        bucket["audio"] += row["audio"]
+        bucket["documents"] += row["documents"]
+    return {"all_data": result}
+
+if __name__ == "__main__":
+    create_db()
     
-create_db()
-add_asset('test_user', '10', 1, 'images') #increasing images count for test user
+    cmd = input("cmd: ")
+    while cmd != "exit":
+        if cmd.startswith("add "):
+            parts = cmd.split()
+            if len(parts) == 6:
+                add_asset(parts[1], parts[2], parts[3], int(parts[4]), parts[5])
+            else:
+                print("Usage: add <asset_id> <user> <month> <week> <type>")
+        elif cmd == "get_counts":
+            user = input("Enter user (or leave empty for all): ")
+            counts = get_counts(user if user else None)
+            print(counts)
+
+        elif cmd == "reset":
+            reset_db()
+            print("Database reset.")
+
+        else:
+            print("Unknown command")
+        
+        cmd = input("cmd: ")

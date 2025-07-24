@@ -1,5 +1,6 @@
 import os, json, urllib.parse, requests
 from datetime import datetime
+from database import add_asset, get_asset_id_list
 
 API  = "https://otmm-qa1.qm.org.qa/otmmapi/v6"
 USER = os.getenv("OTMM_USER")
@@ -58,7 +59,7 @@ def fetch_data():
         r.raise_for_status()          # no 400 now
         return r.json()
     
-def calculate_asset_count(assets):
+def update_data(assets):
     """
     Organises an OTMM asset_list into
 
@@ -80,9 +81,15 @@ def calculate_asset_count(assets):
         • everything else           →  documents
     """
     buckets = {}
-
+    
+    saved_assets = get_asset_id_list()
     assets = assets["search_result_resource"]["asset_list"]
     for asset in assets:
+
+        # if asset already exists, skip it
+        if asset["asset_id"] in saved_assets:
+            continue
+
         # extract date
         date_str = asset.get("date_imported")
         if not date_str:
@@ -92,10 +99,10 @@ def calculate_asset_count(assets):
         month = dt.strftime("%B")           # get month name
         d = dt.day
         week = (
-            "Week 1" if d <= 7 else         # get week number
-            "Week 2" if d <= 14 else
-            "Week 3" if d <= 21 else
-            "Week 4"
+            1 if d <= 7 else         # get week number
+            2 if d <= 14 else
+            3 if d <= 21 else
+            4
         )
 
         # get file type
@@ -111,19 +118,8 @@ def calculate_asset_count(assets):
         else:
             type_ = "documents"
 
-        # increment the counter
-        month_bucket = buckets.setdefault(month, {})
-        week_bucket  = month_bucket.setdefault(week, {})
-        week_bucket[type_] = week_bucket.get(type_, 0) + 1
+        # get user 
+        user = asset.get("content_state_user_name", "unknown")
 
-    # initialize if key pair does not exist
-    classes = ("images", "videos", "audio", "documents")
-    for month_bucket in buckets.values():
-        for w in ("Week 1", "Week 2", "Week 3", "Week 4"):
-            week_bucket = month_bucket.setdefault(w, {})
-            for cls in classes:
-                week_bucket.setdefault(cls, 0)
-
-    return {"all_data": buckets}
-
+        add_asset(asset["asset_id"], user, month, week, type_)
 
