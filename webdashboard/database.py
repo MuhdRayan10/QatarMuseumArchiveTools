@@ -4,6 +4,12 @@ import os
 
 DB_PATH = os.path.join(os.path.dirname(__file__), "data.db")
 
+def reset_db():
+    """Reset the database by deleting the existing file."""
+    if os.path.exists(DB_PATH):
+        os.remove(DB_PATH)
+    create_db()
+
 def create_db():
     db = sqlite3.connect(DB_PATH)
     cursor = db.cursor()
@@ -55,7 +61,7 @@ def get_counts(user=None):
         month = row["month"]
         week = row["week"]
         bucket = result.setdefault(month, {}).setdefault(
-            week, {"images": 0, "videos": 0, "audio": 0, "documents": 0}
+            f"Week {week}", {"images": 0, "videos": 0, "audio": 0, "documents": 0}
         )
         bucket["images"] += row["images"]
         bucket["videos"] += row["videos"]
@@ -65,12 +71,20 @@ def get_counts(user=None):
 
 if __name__ == "__main__":
     create_db()
-    add_asset("12345", "user1", "January", 1, "images")
-
-    db = sqlite3.connect(DB_PATH)
-    cursor = db.cursor()
-
-    cursor.execute("SELECT * FROM assets")
-    rows = cursor.fetchall()
-    for row in rows:
-        print(row)
+    
+    cmd = input("cmd: ")
+    while cmd != "exit":
+        if cmd.startswith("add "):
+            parts = cmd.split()
+            if len(parts) == 6:
+                add_asset(parts[1], parts[2], parts[3], int(parts[4]), parts[5])
+            else:
+                print("Usage: add <asset_id> <user> <month> <week> <type>")
+        elif cmd == "get_counts":
+            user = input("Enter user (or leave empty for all): ")
+            counts = get_counts(user if user else None)
+            print(counts)
+        else:
+            print("Unknown command")
+        
+        cmd = input("cmd: ")
